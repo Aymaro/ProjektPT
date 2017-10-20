@@ -1,4 +1,4 @@
-﻿namespace Aplikacja
+﻿namespace Serwer
 {
     partial class Form1
     {
