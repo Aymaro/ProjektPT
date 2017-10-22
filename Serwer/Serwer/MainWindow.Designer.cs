@@ -1,6 +1,6 @@
 ﻿namespace Serwer
 {
-    partial class Form1
+    partial class MainWindow
     {
         /// <summary>
         /// Wymagana zmienna projektanta.
@@ -28,12 +28,33 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
+            this.MsgLog = new System.Windows.Forms.TextBox();
+            this.SuspendLayout();
+            // 
+            // MsgLog
+            // 
+            this.MsgLog.Location = new System.Drawing.Point(106, 55);
+            this.MsgLog.Multiline = true;
+            this.MsgLog.Name = "MsgLog";
+            this.MsgLog.Size = new System.Drawing.Size(282, 186);
+            this.MsgLog.TabIndex = 0;
+            // 
+            // Form1
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.ClientSize = new System.Drawing.Size(517, 430);
+            this.Controls.Add(this.MsgLog);
+            this.Name = "Form1";
             this.Text = "Form1";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+
         }
 
         #endregion
+
+        public System.Windows.Forms.TextBox MsgLog;
     }
 }
 

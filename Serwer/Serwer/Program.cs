@@ -16,7 +16,14 @@ namespace Serwer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new MainWindow());
+
+            TCP tcp = new TCP("192.168.137.1", 9001);
+            
+        }
+        public static void IncomingMsg(string MSG)
+        {
+            
         }
     }
 }
