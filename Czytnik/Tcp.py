@@ -4,6 +4,8 @@
 import RPi.GPIO as GPIO
 import MFRC522
 import signal
+import socket
+import time
 
 continue_reading = True
 
@@ -13,6 +15,20 @@ def end_read(signal,frame):
     print "Ctrl+C captured, ending read."
     continue_reading = False
     GPIO.cleanup()
+	
+TCP_IP = '192.168.0.101'
+TCP_PORT = 13000
+
+d = 29
+slp = 33
+#ledy
+GPIO.setmode(GPIO.BOARD)
+GPIO.setup(slp, GPIO.OUT)
+GPIO.setup(d, GPIO.OUT)
+
+#ledy inicjalizacja
+GPIO.output(slp, 1)
+GPIO.output(d, 0)
 
 # Hook the SIGINT
 signal.signal(signal.SIGINT, end_read)
@@ -41,21 +57,21 @@ while continue_reading:
     if status == MIFAREReader.MI_OK:
 
         # Print UID
-        print "Card read UID: "+str(uid[0])+","+str(uid[1])+","+str(uid[2])+","+str(uid[3])
-    
-        # This is the default key for authentication
-        key = [0xFF,0xFF,0xFF,0xFF,0xFF,0xFF]
-        
-        # Select the scanned tag
-        MIFAREReader.MFRC522_SelectTag(uid)
-
-        # Authenticate
-        status = MIFAREReader.MFRC522_Auth(MIFAREReader.PICC_AUTHENT1A, 8, key, uid)
-
-        # Check if authenticated
-        if status == MIFAREReader.MI_OK:
-            MIFAREReader.MFRC522_Read(8)
-            MIFAREReader.MFRC522_StopCrypto1()
-        else:
-            print "Authentication error"
-
+		UID = ""
+		UID += str(hex(uid[0]))+str(hex(uid[1]))+str(hex(uid[2]))+str(hex(uid[3])) 
+		
+		print "Card read UID: "+str(hex(uid[0]))+","+str(hex(uid[1]))+","+str(hex(uid[2]))+","+str(hex(uid[3]))
+		print "czas: " +str(int(time.time()))
+		#wyslanie do serwera
+		MESSAGE = ""
+		MESSAGE += "001 " + UID + " " +str(int(time.time()))
+		MSG = str.encode(MESSAGE)
+		s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		s.connect((TCP_IP, TCP_PORT))
+		s.send(MSG)
+		s.close()
+		GPIO.output(d, 1)
+		GPIO.output(slp, 0)
+		time.sleep(0.5)
+		GPIO.output(slp, 1)
+		GPIO.output(d, 0)
