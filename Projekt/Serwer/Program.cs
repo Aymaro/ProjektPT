@@ -1,15 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Serwer
+
+namespace Projekt
 {
     class Program
     {
         static void Main(string[] args)
         {
+            TcpServer TCP = new TcpServer();
+            TCP.Listen();
         }
     }
 }
