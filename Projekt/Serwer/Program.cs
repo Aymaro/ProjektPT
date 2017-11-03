@@ -9,6 +9,7 @@ namespace Projekt
         {
             TcpServer TCP = new TcpServer();
             TCP.Listen();
+            
         }
     }
 }

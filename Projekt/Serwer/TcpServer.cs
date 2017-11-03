@@ -7,14 +7,25 @@ namespace Projekt
     class TcpServer
     {
         private int HostPort = 13000;
+        MySqlEngine msql = new MySqlEngine();
         //konstruktory
         public TcpServer()
         {
-
+            
         }
         public TcpServer(int _HostPort)
         {
             HostPort = _HostPort;
+        }
+        private string DateNow()
+        {
+            string Data = null;
+            return Data += DateTime.Now.Year +
+                            "-" + DateTime.Now.Month +
+                            "-" + DateTime.Now.Day +
+                            " " + DateTime.Now.Hour +
+                            ":" + DateTime.Now.Minute +
+                            ":" + DateTime.Now.Second;
         }
         
 
@@ -23,6 +34,7 @@ namespace Projekt
         {
             //Stworzenie nasluchiwacza
             TcpListener server = null;
+            
 
             try
             {
@@ -39,7 +51,9 @@ namespace Projekt
                 string UID = null;
                 string EPOCH = null;
                 string RDR = null;
-
+                
+                //Test polaczenia MySql
+                //msql.Insert("123", "ASD2", DateNow());
 
                 while (true)
                 {
@@ -56,6 +70,7 @@ namespace Projekt
                         data = System.Text.Encoding.ASCII.GetString(bytes, 0, i);
                         Console.WriteLine("Raw data: {0}", data);
 
+                        
                         RDR = data.Remove(3);
                         data = data.Remove(0, 4);
                         EPOCH = null;
@@ -71,6 +86,9 @@ namespace Projekt
                         Console.WriteLine("RDR: {0}", RDR);
                         Console.WriteLine("UID: {0}", UID);
                         Console.WriteLine("EPOCH: {0}", EPOCH);
+
+                        
+                        msql.Insert(RDR ,UID, DateNow());
 
                     }
                     client.Close();
