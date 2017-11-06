@@ -13,12 +13,8 @@ namespace Projekt
             InitializeComponent();
         }
 
-        void RefreshUsersThread()
-        {
-
-        }
         
-        private void Refresh_Click(object sender, EventArgs e)
+        private void RefreshUsers_Click(object sender, EventArgs e)
         {
             List<string>[] Lista = new List<string> [3];
             Lista = msql.SelectUsers();
