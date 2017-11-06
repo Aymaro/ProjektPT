@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Collections.Generic;
 
 namespace Projekt
 {
     class TcpServer
     {
         private int HostPort = 13000;
-        MySqlEngine msql = new MySqlEngine();
+        MySqlEngineSerwer msql = new MySqlEngineSerwer();
         //konstruktory
         public TcpServer()
         {
@@ -51,9 +52,10 @@ namespace Projekt
                 string UID = null;
                 string EPOCH = null;
                 string RDR = null;
+                List<string> ListaUID = new List<string>();
+                ListaUID = msql.SelectUID();
                 
-                //Test polaczenia MySql
-                //msql.Insert("123", "ASD2", DateNow());
+                
 
                 while (true)
                 {
@@ -76,6 +78,7 @@ namespace Projekt
                         EPOCH = null;
                         UID = data.Remove(16);
                         UID = UID.Replace("0x", "");
+                        UID = UID.ToUpper();
 
                      
                         for (int j = 17; j < data.Length; j++)
@@ -86,6 +89,12 @@ namespace Projekt
                         Console.WriteLine("RDR: {0}", RDR);
                         Console.WriteLine("UID: {0}", UID);
                         Console.WriteLine("EPOCH: {0}", EPOCH);
+
+                        if (ListaUID.Contains(UID) == false)
+                        {
+                            ListaUID.Add(UID);
+                            msql.InsertUserUnknown(UID);
+                        }
 
                         
                         msql.Insert(RDR ,UID, DateNow());
