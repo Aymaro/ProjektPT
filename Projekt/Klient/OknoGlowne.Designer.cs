@@ -62,7 +62,7 @@
             this.RefreshUsers.TabIndex = 0;
             this.RefreshUsers.Text = "Odśwież listę";
             this.RefreshUsers.UseVisualStyleBackColor = true;
-            this.RefreshUsers.Click += new System.EventHandler(this.Refresh_Click);
+            this.RefreshUsers.Click += new System.EventHandler(this.RefreshUsers_Click);
             // 
             // usersGrid
             // 

@@ -1,32 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Projekt
 {
     public partial class OknoGlowne : Form
     {
+        Thread RefreshUsersThread;
+
         public MySqlEngineKlient msql = new MySqlEngineKlient();
         public OknoGlowne()
         {
             InitializeComponent();
+            RefreshUsersThread = new Thread(RefreshUsersThreadDoWork);
         }
 
-        void RefreshUsersThread()
+        void RefreshUsersThreadDoWork()
         {
-
-        }
-        
-        private void Refresh_Click(object sender, EventArgs e)
-        {
-            List<string>[] Lista = new List<string> [3];
+            List<string>[] Lista = new List<string>[3];
             Lista = msql.SelectUsers();
             usersGrid.Rows.Clear();
             for (int i = 0; i < Lista[0].Count; i++)
             {
                 usersGrid.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i]);
             }
+            RefreshUsers.Enabled = true;
+        }
+
+        private void RefreshUsers_Click(object sender, EventArgs e)
+        {
+            RefreshUsersThread.Start();
+            RefreshUsers.Enabled = false;
         }
 
         private void RefreshLog_Click(object sender, EventArgs e)
@@ -39,7 +44,7 @@ namespace Projekt
                 LogGrid.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i], Lista[3][i], Lista[4][i], Lista[5][i]);
             }
         }
-        
+
 
         private void AddUser_Click(object sender, EventArgs e)
         {
@@ -72,7 +77,7 @@ namespace Projekt
                 {
                     return;
                 }
-                
+
                 //todo DEFINITYWNIE?
                 //MessageBox.Show(UID);
             }
@@ -95,13 +100,13 @@ namespace Projekt
                 {
                     dane[i] = usersGrid.Rows[usersGrid.CurrentCell.RowIndex].Cells[i].Value.ToString();
                 }
-                
-                using (DodajKarte karta = new DodajKarte(this,dane[0],dane[1],dane[2]))
+
+                using (DodajKarte karta = new DodajKarte(this, dane[0], dane[1], dane[2]))
                 {
                     karta.ShowDialog();
                 }
             }
-            
+
         }
     }
 }
