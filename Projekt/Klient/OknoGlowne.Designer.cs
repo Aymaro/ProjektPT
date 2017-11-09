@@ -43,10 +43,10 @@
             this.RefreshLog = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.ListaUzytkownikow = new System.Windows.Forms.TabPage();
+            this.EditUser = new System.Windows.Forms.Button();
+            this.RemoveUser = new System.Windows.Forms.Button();
             this.AddUser = new System.Windows.Forms.Button();
             this.Log = new System.Windows.Forms.TabPage();
-            this.RemoveUser = new System.Windows.Forms.Button();
-            this.EditUser = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -83,16 +83,19 @@
             // 
             this.UID.HeaderText = "UID";
             this.UID.Name = "UID";
+            this.UID.ReadOnly = true;
             // 
             // Imie
             // 
             this.Imie.HeaderText = "Imie";
             this.Imie.Name = "Imie";
+            this.Imie.ReadOnly = true;
             // 
             // Nazwisko
             // 
             this.Nazwisko.HeaderText = "Nazwisko";
             this.Nazwisko.Name = "Nazwisko";
+            this.Nazwisko.ReadOnly = true;
             // 
             // LogGrid
             // 
@@ -178,6 +181,26 @@
             this.ListaUzytkownikow.Text = "Lista użytkowników";
             this.ListaUzytkownikow.UseVisualStyleBackColor = true;
             // 
+            // EditUser
+            // 
+            this.EditUser.Location = new System.Drawing.Point(254, 6);
+            this.EditUser.Name = "EditUser";
+            this.EditUser.Size = new System.Drawing.Size(75, 23);
+            this.EditUser.TabIndex = 4;
+            this.EditUser.Text = "Edytuj kartę";
+            this.EditUser.UseVisualStyleBackColor = true;
+            this.EditUser.Click += new System.EventHandler(this.EditUser_Click);
+            // 
+            // RemoveUser
+            // 
+            this.RemoveUser.Location = new System.Drawing.Point(173, 6);
+            this.RemoveUser.Name = "RemoveUser";
+            this.RemoveUser.Size = new System.Drawing.Size(75, 23);
+            this.RemoveUser.TabIndex = 3;
+            this.RemoveUser.Text = "Usuń kartę";
+            this.RemoveUser.UseVisualStyleBackColor = true;
+            this.RemoveUser.Click += new System.EventHandler(this.RemoveUser_Click);
+            // 
             // AddUser
             // 
             this.AddUser.Location = new System.Drawing.Point(92, 6);
@@ -199,26 +222,6 @@
             this.Log.TabIndex = 1;
             this.Log.Text = "Log";
             this.Log.UseVisualStyleBackColor = true;
-            // 
-            // RemoveUser
-            // 
-            this.RemoveUser.Location = new System.Drawing.Point(173, 6);
-            this.RemoveUser.Name = "RemoveUser";
-            this.RemoveUser.Size = new System.Drawing.Size(75, 23);
-            this.RemoveUser.TabIndex = 3;
-            this.RemoveUser.Text = "Usuń kartę";
-            this.RemoveUser.UseVisualStyleBackColor = true;
-            this.RemoveUser.Click += new System.EventHandler(this.RemoveUser_Click);
-            // 
-            // EditUser
-            // 
-            this.EditUser.Location = new System.Drawing.Point(254, 6);
-            this.EditUser.Name = "EditUser";
-            this.EditUser.Size = new System.Drawing.Size(75, 23);
-            this.EditUser.TabIndex = 4;
-            this.EditUser.Text = "Edytuj kartę";
-            this.EditUser.UseVisualStyleBackColor = true;
-            this.EditUser.Click += new System.EventHandler(this.EditUser_Click);
             // 
             // OknoGlowne
             // 

@@ -8,41 +8,68 @@ namespace Projekt
     public partial class OknoGlowne : Form
     {
         Thread RefreshUsersThread;
+        Thread RefreshLogThread;
 
         public MySqlEngineKlient msql = new MySqlEngineKlient();
         public OknoGlowne()
         {
             InitializeComponent();
-            RefreshUsersThread = new Thread(RefreshUsersThreadDoWork);
         }
 
         void RefreshUsersThreadDoWork()
         {
             List<string>[] Lista = new List<string>[3];
             Lista = msql.SelectUsers();
-            usersGrid.Rows.Clear();
-            for (int i = 0; i < Lista[0].Count; i++)
+            usersGrid.Invoke(new Action(delegate ()
             {
-                usersGrid.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i]);
-            }
-            RefreshUsers.Enabled = true;
+                usersGrid.Rows.Clear();
+                for (int i = 0; i < Lista[0].Count; i++)
+                {
+                    usersGrid.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i]);
+                }
+            }));
+
+            RefreshUsers.Invoke(new Action(delegate ()
+            {
+                RefreshUsers.Enabled = true;
+            }));
+            
         }
+
+        void RefreshLogThreadDoWork()
+        {
+            List<string>[] Lista = new List<string>[6];
+            Lista = msql.SelectLog();
+            
+            LogGrid.Invoke(new Action(delegate ()
+            {
+                LogGrid.Rows.Clear();
+                for (int i = 0; i < Lista[0].Count; i++)
+                {
+                    LogGrid.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i], Lista[3][i], Lista[4][i], Lista[5][i]);
+                }
+            }));
+
+            RefreshUsers.Invoke(new Action(delegate ()
+            {
+                RefreshLog.Enabled = true;
+            }));
+
+        }
+
 
         private void RefreshUsers_Click(object sender, EventArgs e)
         {
+            RefreshUsersThread = new Thread(RefreshUsersThreadDoWork);
             RefreshUsersThread.Start();
             RefreshUsers.Enabled = false;
         }
 
         private void RefreshLog_Click(object sender, EventArgs e)
         {
-            List<string>[] Lista = new List<string>[6];
-            Lista = msql.SelectLog();
-            LogGrid.Rows.Clear();
-            for (int i = 0; i < Lista[0].Count; i++)
-            {
-                LogGrid.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i], Lista[3][i], Lista[4][i], Lista[5][i]);
-            }
+            RefreshLogThread = new Thread(RefreshLogThreadDoWork);
+            RefreshLogThread.Start();
+            RefreshLog.Enabled = false;
         }
 
 
@@ -108,5 +135,7 @@ namespace Projekt
             }
 
         }
+
+        
     }
 }
