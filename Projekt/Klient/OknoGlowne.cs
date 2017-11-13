@@ -10,15 +10,21 @@ namespace Klient
         Thread RefreshUsersThread;
         Thread RefreshLogThread;
         Thread RefreshSubjectsListThread;
+        List<string> Dane;
+        
+
 
         public MySqlEngineKlient msql = new MySqlEngineKlient();
         public OknoGlowne()
         {
-            InitializeComponent();
-            new OknoLogowania(this).Show();
-            Visible = false;
+            InitializeComponent(); 
         }
-
+        public OknoGlowne(List<string> _Dane)
+        {
+            InitializeComponent();
+            Dane = _Dane;
+            Text = String.Format("Użytkownik: {0} {1}",Dane[1], Dane[2]);
+        }
 
         private void RefreshUsers_Click(object sender, EventArgs e)
         {

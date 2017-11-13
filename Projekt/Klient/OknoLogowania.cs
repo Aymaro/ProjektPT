@@ -7,11 +7,9 @@ namespace Klient
     public partial class OknoLogowania : Form
     {
         MySqlEngineKlient msql = new MySqlEngineKlient();
-        OknoGlowne OG;
-        public OknoLogowania(OknoGlowne _OG)
+        public OknoLogowania()
         {
             InitializeComponent();
-            OG = _OG;
         }
 
         private void ExitButton_Click(object sender, EventArgs e)
@@ -28,7 +26,7 @@ namespace Klient
             else
             {
                 List<string> lista = new List<string>();
-                lista = msql.LoginUser(LoginTextBox.Text, PasswordTextBox.Text);
+                lista = msql.LoginUser(LoginTextBox.Text, msql.MD5Hash(PasswordTextBox.Text));
                 if (lista.Count == 0)
                 {
                     MessageBox.Show("Podano błędne dane logowania!", "Błąd logowania!", MessageBoxButtons.OK);
@@ -36,8 +34,11 @@ namespace Klient
                 }
                 else
                 {
-                    OG.Visible = true;
-                    Close();
+                    //Uzytkownik poprawnie sie zalogowal.
+                    Hide();
+                    OknoGlowne OG = new OknoGlowne(lista);
+                    OG.Closed += (s, args) => Close();
+                    OG.Show();
                 }
             }
         }
