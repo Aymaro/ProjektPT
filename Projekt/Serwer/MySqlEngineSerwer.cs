@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using MySql.Data.MySqlClient;
 
-namespace Projekt
+namespace Klient
 {
     class MySqlEngineSerwer
     {

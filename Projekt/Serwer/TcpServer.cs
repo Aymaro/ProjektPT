@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Collections.Generic;
 
-namespace Projekt
+namespace Klient
 {
     class TcpServer
     {

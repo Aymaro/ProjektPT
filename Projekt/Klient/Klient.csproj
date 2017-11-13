@@ -59,6 +59,12 @@
       <DependentUpon>OknoGlowne.cs</DependentUpon>
     </Compile>
     <Compile Include="MySqlEngineKlient.cs" />
+    <Compile Include="OknoLogowania.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OknoLogowania.Designer.cs">
+      <DependentUpon>OknoLogowania.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="DodajKarte.resx">
@@ -66,6 +72,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="OknoGlowne.resx">
       <DependentUpon>OknoGlowne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OknoLogowania.resx">
+      <DependentUpon>OknoLogowania.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

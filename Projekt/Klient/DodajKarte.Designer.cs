@@ -1,4 +1,4 @@
-﻿namespace Projekt
+﻿namespace Klient
 {
     partial class DodajKarte
     {

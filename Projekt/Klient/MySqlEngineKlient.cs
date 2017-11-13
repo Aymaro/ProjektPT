@@ -2,7 +2,7 @@
 using MySql.Data.MySqlClient;
 using System.Collections.Generic;
 
-namespace Projekt
+namespace Klient
 {
     public class MySqlEngineKlient
     {
@@ -73,7 +73,7 @@ namespace Projekt
        
         public List<string>[] SelectUsers()
         {
-            string query = "SELECT UID, Imie, Nazwisko FROM users";
+            string query = "SELECT UID, Imie, Nazwisko FROM studenci";
 
             //Create a list to store the result
             List<string>[] list = new List<string>[3];
@@ -140,6 +140,43 @@ namespace Projekt
                     list[3].Add(dataReader["rdr"] + "");
                     list[4].Add(dataReader["Imie"] + "");
                     list[5].Add(dataReader["Nazwisko"] + "");
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return list;
+            }
+            else
+            {
+                return list;
+            }
+        }
+        public List<string>[] SelectSubjectList()
+        {
+            string query = "SELECT id_przedmiotu, Nazwa FROM przedmioty";
+
+            //Create a list to store the result
+            List<string>[] list = new List<string>[2];
+            list[0] = new List<string>();
+            list[1] = new List<string>();
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    list[0].Add(dataReader["id_przedmiotu"] + "");
+                    list[1].Add(dataReader["Nazwa"] + "");
                 }
 
                 //close Data Reader
@@ -227,7 +264,7 @@ namespace Projekt
         public void DeleteUser(string UID)
         {
             
-            string query = String.Format("Delete FROM users WHERE UID= '{0}'", UID);
+            string query = String.Format("Delete FROM studenci WHERE UID= '{0}'", UID);
 
             //open connection
             if (this.OpenConnection() == true)
@@ -240,6 +277,44 @@ namespace Projekt
 
                 //close connection
                 this.CloseConnection();
+            }
+        }
+        public List<string> LoginUser(string login, string password)
+        {
+            string query = String.Format("SELECT ID, Imie, Nazwisko FROM wykladowcy WHERE login = '{0}' and haslo = '{1}'", login, password);
+
+            //Create a list to store the result
+            List<string> list = new List<string>();
+            
+
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    list.Add(dataReader["ID"] + "");
+                    list.Add(dataReader["Imie"] + "");
+                    list.Add(dataReader["Nazwisko"] + "");
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return list;
+            }
+            else
+            {
+                return list;
             }
         }
     }

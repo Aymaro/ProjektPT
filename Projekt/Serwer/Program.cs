@@ -1,7 +1,7 @@
 ﻿using System;
 
 
-namespace Projekt
+namespace Klient
 {
     class Program
     {

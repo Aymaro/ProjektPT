@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace Projekt
+namespace Klient
 {
     public partial class DodajKarte : Form
     {
