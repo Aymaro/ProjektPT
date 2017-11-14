@@ -11,12 +11,10 @@ namespace Klient
         {
             InitializeComponent();
         }
-
         private void ExitButton_Click(object sender, EventArgs e)
         {
             Close();
         }
-
         private void LoginButton_Click(object sender, EventArgs e)
         {
             if (LoginTextBox.Text == "" || PasswordTextBox.Text == "")
@@ -34,11 +32,22 @@ namespace Klient
                 }
                 else
                 {
-                    //Uzytkownik poprawnie sie zalogowal.
-                    Hide();
-                    OknoGlowne OG = new OknoGlowne(lista);
-                    OG.Closed += (s, args) => Close();
-                    OG.Show();
+                    if (lista[0] == "1")
+                    {
+                        //Zalogowal sie administrator
+                        Hide();
+                        OknoGlowne OG = new OknoGlowne(lista);
+                        OG.Closed += (s, args) => Close();
+                        OG.Show();
+                    }
+                    else
+                    {
+                        //Uzytkownik poprawnie sie zalogowal.
+                        Hide();
+                        OknoGlowne OG = new OknoGlowne(lista);
+                        OG.Closed += (s, args) => Close();
+                        OG.Show();
+                    }
                 }
             }
         }

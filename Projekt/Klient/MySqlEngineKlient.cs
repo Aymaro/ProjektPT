@@ -72,8 +72,8 @@ namespace Klient
                 return false;
             }
         }
-       
-        public List<string>[] SelectUsers()
+
+        public List<string>[] SelectStudents()
         {
             string query = "SELECT UID, Imie, Nazwisko FROM studenci";
 
@@ -115,7 +115,7 @@ namespace Klient
         }
         public List<string>[] SelectLog()
         {
-            string query = "SELECT a.id,data,a.uid,rdr,b.Imie,b.Nazwisko FROM log a join users b on a.UID = b.UID";
+            string query = "SELECT a.id,data,a.uid,rdr,b.Imie,b.Nazwisko FROM log a join studenci b on a.UID = b.UID";
 
             //Create a list to store the result
             List<string>[] list = new List<string>[6];
@@ -202,7 +202,7 @@ namespace Klient
             if (Nazwisko == "")
                 Nazwisko = "Unknown";
 
-            string query = String.Format("INSERT INTO users (UID, Imie, Nazwisko) SELECT '{0}', '{1}', '{2}' FROM users WHERE NOT EXISTS (SELECT * FROM users WHERE UID='{0}') LIMIT 1 ;", UID, Imie, Nazwisko);
+            string query = String.Format("INSERT INTO studenci (UID, Imie, Nazwisko) SELECT '{0}', '{1}', '{2}' FROM studenci WHERE NOT EXISTS (SELECT * FROM studenci WHERE UID='{0}') LIMIT 1 ;", UID, Imie, Nazwisko);
 
             //open connection
             if (this.OpenConnection() == true)
@@ -225,7 +225,7 @@ namespace Klient
                 Nazwisko = "Unknown";
 
 
-            string query = String.Format("UPDATE users SET Imie='{0}', Nazwisko='{1}' WHERE UID= '{2}'", Imie, Nazwisko, UID);
+            string query = String.Format("UPDATE studenci SET Imie='{0}', Nazwisko='{1}' WHERE UID= '{2}'", Imie, Nazwisko, UID);
 
             //open connection
             if (this.OpenConnection() == true)
@@ -248,7 +248,7 @@ namespace Klient
                 Nazwisko = "Unknown";
 
 
-            string query = String.Format("UPDATE users SET Imie='{0}', Nazwisko='{1}', UID='{3}' WHERE UID= '{2}'", Imie, Nazwisko, UID, wUID);
+            string query = String.Format("UPDATE studenci SET Imie='{0}', Nazwisko='{1}', UID='{3}' WHERE UID= '{2}'", Imie, Nazwisko, UID, wUID);
 
             //open connection
             if (this.OpenConnection() == true)
@@ -265,7 +265,7 @@ namespace Klient
         }
         public void DeleteUser(string UID)
         {
-            
+
             string query = String.Format("Delete FROM studenci WHERE UID= '{0}'", UID);
 
             //open connection
@@ -287,7 +287,7 @@ namespace Klient
 
             //Create a list to store the result
             List<string> list = new List<string>();
-            
+
 
             //Open connection
             if (this.OpenConnection() == true)

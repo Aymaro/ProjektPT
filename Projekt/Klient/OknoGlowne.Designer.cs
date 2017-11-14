@@ -41,24 +41,29 @@
             this.dataGridViewTextBoxColumn2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RefreshLog = new System.Windows.Forms.Button();
-            this.RefreshLessons = new System.Windows.Forms.TabControl();
-            this.ListaUzytkownikow = new System.Windows.Forms.TabPage();
+            this.AdminTabPageBox = new System.Windows.Forms.TabControl();
+            this.ListaUzytkownikowTabPage = new System.Windows.Forms.TabPage();
             this.EditUser = new System.Windows.Forms.Button();
             this.RemoveUser = new System.Windows.Forms.Button();
             this.AddUser = new System.Windows.Forms.Button();
-            this.Log = new System.Windows.Forms.TabPage();
-            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.LogTabPage = new System.Windows.Forms.TabPage();
+            this.ListaPrzedmiotowTabPage = new System.Windows.Forms.TabPage();
             this.RefreshSubjectsList = new System.Windows.Forms.Button();
             this.SubjectsListGrid = new System.Windows.Forms.DataGridView();
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wylogujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).BeginInit();
-            this.RefreshLessons.SuspendLayout();
-            this.ListaUzytkownikow.SuspendLayout();
-            this.Log.SuspendLayout();
-            this.tabPage1.SuspendLayout();
+            this.AdminTabPageBox.SuspendLayout();
+            this.ListaUzytkownikowTabPage.SuspendLayout();
+            this.LogTabPage.SuspendLayout();
+            this.ListaPrzedmiotowTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SubjectsListGrid)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // RefreshUsers
@@ -171,31 +176,31 @@
             this.RefreshLog.UseVisualStyleBackColor = true;
             this.RefreshLog.Click += new System.EventHandler(this.RefreshLog_Click);
             // 
-            // RefreshLessons
+            // AdminTabPageBox
             // 
-            this.RefreshLessons.Controls.Add(this.ListaUzytkownikow);
-            this.RefreshLessons.Controls.Add(this.Log);
-            this.RefreshLessons.Controls.Add(this.tabPage1);
-            this.RefreshLessons.Location = new System.Drawing.Point(12, 12);
-            this.RefreshLessons.Name = "RefreshLessons";
-            this.RefreshLessons.SelectedIndex = 0;
-            this.RefreshLessons.Size = new System.Drawing.Size(700, 352);
-            this.RefreshLessons.TabIndex = 4;
+            this.AdminTabPageBox.Controls.Add(this.ListaUzytkownikowTabPage);
+            this.AdminTabPageBox.Controls.Add(this.LogTabPage);
+            this.AdminTabPageBox.Controls.Add(this.ListaPrzedmiotowTabPage);
+            this.AdminTabPageBox.Location = new System.Drawing.Point(12, 27);
+            this.AdminTabPageBox.Name = "AdminTabPageBox";
+            this.AdminTabPageBox.SelectedIndex = 0;
+            this.AdminTabPageBox.Size = new System.Drawing.Size(700, 352);
+            this.AdminTabPageBox.TabIndex = 4;
             // 
-            // ListaUzytkownikow
+            // ListaUzytkownikowTabPage
             // 
-            this.ListaUzytkownikow.Controls.Add(this.EditUser);
-            this.ListaUzytkownikow.Controls.Add(this.RemoveUser);
-            this.ListaUzytkownikow.Controls.Add(this.AddUser);
-            this.ListaUzytkownikow.Controls.Add(this.RefreshUsers);
-            this.ListaUzytkownikow.Controls.Add(this.usersGrid);
-            this.ListaUzytkownikow.Location = new System.Drawing.Point(4, 22);
-            this.ListaUzytkownikow.Name = "ListaUzytkownikow";
-            this.ListaUzytkownikow.Padding = new System.Windows.Forms.Padding(3);
-            this.ListaUzytkownikow.Size = new System.Drawing.Size(692, 326);
-            this.ListaUzytkownikow.TabIndex = 0;
-            this.ListaUzytkownikow.Text = "Lista użytkowników";
-            this.ListaUzytkownikow.UseVisualStyleBackColor = true;
+            this.ListaUzytkownikowTabPage.Controls.Add(this.EditUser);
+            this.ListaUzytkownikowTabPage.Controls.Add(this.RemoveUser);
+            this.ListaUzytkownikowTabPage.Controls.Add(this.AddUser);
+            this.ListaUzytkownikowTabPage.Controls.Add(this.RefreshUsers);
+            this.ListaUzytkownikowTabPage.Controls.Add(this.usersGrid);
+            this.ListaUzytkownikowTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ListaUzytkownikowTabPage.Name = "ListaUzytkownikowTabPage";
+            this.ListaUzytkownikowTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ListaUzytkownikowTabPage.Size = new System.Drawing.Size(692, 326);
+            this.ListaUzytkownikowTabPage.TabIndex = 0;
+            this.ListaUzytkownikowTabPage.Text = "Lista użytkowników";
+            this.ListaUzytkownikowTabPage.UseVisualStyleBackColor = true;
             // 
             // EditUser
             // 
@@ -227,29 +232,29 @@
             this.AddUser.UseVisualStyleBackColor = true;
             this.AddUser.Click += new System.EventHandler(this.AddUser_Click);
             // 
-            // Log
+            // LogTabPage
             // 
-            this.Log.Controls.Add(this.RefreshLog);
-            this.Log.Controls.Add(this.LogGrid);
-            this.Log.Location = new System.Drawing.Point(4, 22);
-            this.Log.Name = "Log";
-            this.Log.Padding = new System.Windows.Forms.Padding(3);
-            this.Log.Size = new System.Drawing.Size(692, 326);
-            this.Log.TabIndex = 1;
-            this.Log.Text = "Log";
-            this.Log.UseVisualStyleBackColor = true;
+            this.LogTabPage.Controls.Add(this.RefreshLog);
+            this.LogTabPage.Controls.Add(this.LogGrid);
+            this.LogTabPage.Location = new System.Drawing.Point(4, 22);
+            this.LogTabPage.Name = "LogTabPage";
+            this.LogTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.LogTabPage.Size = new System.Drawing.Size(692, 326);
+            this.LogTabPage.TabIndex = 1;
+            this.LogTabPage.Text = "Log";
+            this.LogTabPage.UseVisualStyleBackColor = true;
             // 
-            // tabPage1
+            // ListaPrzedmiotowTabPage
             // 
-            this.tabPage1.Controls.Add(this.RefreshSubjectsList);
-            this.tabPage1.Controls.Add(this.SubjectsListGrid);
-            this.tabPage1.Location = new System.Drawing.Point(4, 22);
-            this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(692, 326);
-            this.tabPage1.TabIndex = 2;
-            this.tabPage1.Text = "Lista przedmiotów";
-            this.tabPage1.UseVisualStyleBackColor = true;
+            this.ListaPrzedmiotowTabPage.Controls.Add(this.RefreshSubjectsList);
+            this.ListaPrzedmiotowTabPage.Controls.Add(this.SubjectsListGrid);
+            this.ListaPrzedmiotowTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ListaPrzedmiotowTabPage.Name = "ListaPrzedmiotowTabPage";
+            this.ListaPrzedmiotowTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ListaPrzedmiotowTabPage.Size = new System.Drawing.Size(692, 326);
+            this.ListaPrzedmiotowTabPage.TabIndex = 2;
+            this.ListaPrzedmiotowTabPage.Text = "Lista przedmiotów";
+            this.ListaPrzedmiotowTabPage.UseVisualStyleBackColor = true;
             // 
             // RefreshSubjectsList
             // 
@@ -288,23 +293,60 @@
             this.dataGridViewTextBoxColumn5.ReadOnly = true;
             this.dataGridViewTextBoxColumn5.Width = 200;
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pomocToolStripMenuItem,
+            this.wylogujToolStripMenuItem});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(724, 24);
+            this.menuStrip1.TabIndex = 5;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // pomocToolStripMenuItem
+            // 
+            this.pomocToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.infoToolStripMenuItem});
+            this.pomocToolStripMenuItem.Name = "pomocToolStripMenuItem";
+            this.pomocToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
+            this.pomocToolStripMenuItem.Text = "Pomoc";
+            // 
+            // wylogujToolStripMenuItem
+            // 
+            this.wylogujToolStripMenuItem.Name = "wylogujToolStripMenuItem";
+            this.wylogujToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
+            this.wylogujToolStripMenuItem.Text = "Wyloguj";
+            this.wylogujToolStripMenuItem.Click += new System.EventHandler(this.wylogujToolStripMenuItem_Click);
+            // 
+            // infoToolStripMenuItem
+            // 
+            this.infoToolStripMenuItem.Name = "infoToolStripMenuItem";
+            this.infoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.infoToolStripMenuItem.Text = "Info";
+            this.infoToolStripMenuItem.Click += new System.EventHandler(this.infoToolStripMenuItem_Click);
+            // 
             // OknoGlowne
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(724, 376);
-            this.Controls.Add(this.RefreshLessons);
+            this.Controls.Add(this.AdminTabPageBox);
+            this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "OknoGlowne";
             this.Text = "Klient";
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).EndInit();
-            this.RefreshLessons.ResumeLayout(false);
-            this.ListaUzytkownikow.ResumeLayout(false);
-            this.Log.ResumeLayout(false);
-            this.tabPage1.ResumeLayout(false);
+            this.AdminTabPageBox.ResumeLayout(false);
+            this.ListaUzytkownikowTabPage.ResumeLayout(false);
+            this.LogTabPage.ResumeLayout(false);
+            this.ListaPrzedmiotowTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SubjectsListGrid)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -323,17 +365,21 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn RDR;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
-        private System.Windows.Forms.TabControl RefreshLessons;
-        private System.Windows.Forms.TabPage ListaUzytkownikow;
-        private System.Windows.Forms.TabPage Log;
+        private System.Windows.Forms.TabControl AdminTabPageBox;
+        private System.Windows.Forms.TabPage ListaUzytkownikowTabPage;
+        private System.Windows.Forms.TabPage LogTabPage;
         private System.Windows.Forms.Button AddUser;
         private System.Windows.Forms.Button EditUser;
         private System.Windows.Forms.Button RemoveUser;
-        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage ListaPrzedmiotowTabPage;
         private System.Windows.Forms.Button RefreshSubjectsList;
         private System.Windows.Forms.DataGridView SubjectsListGrid;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn4;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn5;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem pomocToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem wylogujToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem infoToolStripMenuItem;
     }
 }
 

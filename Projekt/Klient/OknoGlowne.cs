@@ -7,25 +7,36 @@ namespace Klient
 {
     public partial class OknoGlowne : Form
     {
+        //dane globalne
         Thread RefreshUsersThread;
         Thread RefreshLogThread;
         Thread RefreshSubjectsListThread;
         List<string> Dane;
-        
-
-
         public MySqlEngineKlient msql = new MySqlEngineKlient();
+
+        //Konstruktory
         public OknoGlowne()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
         public OknoGlowne(List<string> _Dane)
         {
             InitializeComponent();
             Dane = _Dane;
-            Text = String.Format("Użytkownik: {0} {1}",Dane[1], Dane[2]);
-        }
+            Text = String.Format("Użytkownik: {0} {1}", Dane[1], Dane[2]);
 
+            if (Dane[0] == "1")
+            {
+                //ustawiamy wszystko tak jak by to byl administrator
+                AdminTabPageBox.Show();
+            }
+            else
+            {
+                AdminTabPageBox.Hide();
+            }
+        }
+        //ciało aplikacji
+        //karta studentow i kart 
         private void RefreshUsers_Click(object sender, EventArgs e)
         {
             RefreshUsersThread = new Thread(RefreshUsersThreadDoWork);
@@ -36,7 +47,7 @@ namespace Klient
 
         {
             List<string>[] Lista = new List<string>[3];
-            Lista = msql.SelectUsers();
+            Lista = msql.SelectStudents();
             usersGrid.Invoke(new Action(delegate ()
             {
                 usersGrid.Rows.Clear();
@@ -50,8 +61,68 @@ namespace Klient
             {
                 RefreshUsers.Enabled = true;
             }));
-            
+
         }
+        private void AddUser_Click(object sender, EventArgs e)
+        {
+            using (DodajKarte karta = new DodajKarte(this))
+            {
+                karta.ShowDialog();
+            }
+        }
+        private void RemoveUser_Click(object sender, EventArgs e)
+        {
+            if (usersGrid.SelectedCells.Count == 0 || usersGrid.CurrentCell.RowIndex > usersGrid.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
+            }
+            else if (usersGrid.SelectedCells.Count > 1 && usersGrid.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
+            }
+            else
+            {
+                string UID = usersGrid.Rows[usersGrid.CurrentCell.RowIndex].Cells[0].Value.ToString();
+
+                DialogResult result = MessageBox.Show("Czy aby na pewno chcesz usunąć ten element?", "Potwierdź usunięcie.", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    msql.DeleteUser(UID);
+                }
+                else
+                {
+                    return;
+                }
+
+            }
+        }
+        private void EditUser_Click(object sender, EventArgs e)
+        {
+            if (usersGrid.SelectedCells.Count == 0 || usersGrid.CurrentCell.RowIndex > usersGrid.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
+            }
+            else if (usersGrid.SelectedCells.Count > 1 && usersGrid.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
+            }
+            else
+            {
+                string[] dane = new string[usersGrid.ColumnCount];
+                for (int i = 0; i < usersGrid.ColumnCount; i++)
+                {
+                    dane[i] = usersGrid.Rows[usersGrid.CurrentCell.RowIndex].Cells[i].Value.ToString();
+                }
+
+                using (DodajKarte karta = new DodajKarte(this, dane[0], dane[1], dane[2]))
+                {
+                    karta.ShowDialog();
+                }
+            }
+
+        }
+        //karta logu
         private void RefreshLog_Click(object sender, EventArgs e)
         {
             RefreshLogThread = new Thread(RefreshLogThreadDoWork);
@@ -62,7 +133,7 @@ namespace Klient
         {
             List<string>[] Lista = new List<string>[6];
             Lista = msql.SelectLog();
-            
+
             LogGrid.Invoke(new Action(delegate ()
             {
                 LogGrid.Rows.Clear();
@@ -78,6 +149,7 @@ namespace Klient
             }));
 
         }
+        //karta listy przedmiotow
         private void RefreshSubjectsList_Click(object sender, EventArgs e)
         {
             RefreshSubjectsListThread = new Thread(RefreshSubjectsListThreadDoWork);
@@ -104,69 +176,23 @@ namespace Klient
             }));
 
         }
-
-        private void AddUser_Click(object sender, EventArgs e)
+        //gorna listwa menu
+        private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (DodajKarte karta = new DodajKarte(this))
+            DialogResult result = MessageBox.Show("Czy aby na pewno chcesz się wylogować?", "Potwierdź wyjście", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
             {
-                karta.ShowDialog();
+                Hide();
+                OknoLogowania OL = new OknoLogowania();
+                OL.Closed += (s, args) => Close();
+                OL.Show();
             }
         }
-
-        private void RemoveUser_Click(object sender, EventArgs e)
+        private void infoToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (usersGrid.SelectedCells.Count == 0 || usersGrid.CurrentCell.RowIndex > usersGrid.Rows.Count)
-            {
-                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
-            }
-            else if (usersGrid.SelectedCells.Count > 1 && usersGrid.SelectedRows.Count != 1)
-            {
-                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
-            }
-            else
-            {
-                string UID = usersGrid.Rows[usersGrid.CurrentCell.RowIndex].Cells[0].Value.ToString();
-
-                DialogResult result = MessageBox.Show("Czy aby na pewno chcesz usunąć ten element?", "Potwierdź usunięcie.", MessageBoxButtons.YesNo);
-
-                if (result == DialogResult.Yes)
-                {
-                    msql.DeleteUser(UID);
-                }
-                else
-                {
-                    return;
-                }
-                
-            }
+            MessageBox.Show("Wszelkie pytania lub pomysły dotyczące\n" +
+                            "aplikacji prosze słać na maila:\n" +
+                            "michal.parus@gmail.com");
         }
-
-        private void EditUser_Click(object sender, EventArgs e)
-        {
-            if (usersGrid.SelectedCells.Count == 0 || usersGrid.CurrentCell.RowIndex > usersGrid.Rows.Count)
-            {
-                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
-            }
-            else if (usersGrid.SelectedCells.Count > 1 && usersGrid.SelectedRows.Count != 1)
-            {
-                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
-            }
-            else
-            {
-                string[] dane = new string[usersGrid.ColumnCount];
-                for (int i = 0; i < usersGrid.ColumnCount; i++)
-                {
-                    dane[i] = usersGrid.Rows[usersGrid.CurrentCell.RowIndex].Cells[i].Value.ToString();
-                }
-
-                using (DodajKarte karta = new DodajKarte(this, dane[0], dane[1], dane[2]))
-                {
-                    karta.ShowDialog();
-                }
-            }
-
-        }
-
-        
     }
 }
