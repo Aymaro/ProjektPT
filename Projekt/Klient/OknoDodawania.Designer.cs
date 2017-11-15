@@ -1,6 +1,6 @@
 ﻿namespace Klient
 {
-    partial class DodajKarte
+    partial class OknoDodawania
     {
         /// <summary>
         /// Required designer variable.
@@ -31,17 +31,21 @@
             this.AddButton = new System.Windows.Forms.Button();
             this.CancelButton = new System.Windows.Forms.Button();
             this.UIDtextBox = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
+            this.LabelID = new System.Windows.Forms.Label();
+            this.LabelImie = new System.Windows.Forms.Label();
             this.ImieTextBox = new System.Windows.Forms.TextBox();
-            this.label3 = new System.Windows.Forms.Label();
+            this.LabelNazwisko = new System.Windows.Forms.Label();
             this.NazwiskoTextBox = new System.Windows.Forms.TextBox();
             this.EditCheckBox = new System.Windows.Forms.CheckBox();
+            this.HasloTextBox = new System.Windows.Forms.TextBox();
+            this.LoginTextBox = new System.Windows.Forms.TextBox();
+            this.LabelHaslo = new System.Windows.Forms.Label();
+            this.LabelLogin = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(294, 77);
+            this.AddButton.Location = new System.Drawing.Point(294, 97);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(75, 23);
             this.AddButton.TabIndex = 0;
@@ -51,7 +55,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(12, 77);
+            this.CancelButton.Location = new System.Drawing.Point(12, 97);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 1;
@@ -66,23 +70,22 @@
             this.UIDtextBox.Size = new System.Drawing.Size(115, 20);
             this.UIDtextBox.TabIndex = 2;
             // 
-            // label1
+            // LabelID
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(26, 13);
-            this.label1.TabIndex = 5;
-            this.label1.Text = "UID";
+            this.LabelID.AutoSize = true;
+            this.LabelID.Location = new System.Drawing.Point(12, 9);
+            this.LabelID.Name = "LabelID";
+            this.LabelID.Size = new System.Drawing.Size(0, 13);
+            this.LabelID.TabIndex = 5;
             // 
-            // label2
+            // LabelImie
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(133, 9);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(26, 13);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "Imię";
+            this.LabelImie.AutoSize = true;
+            this.LabelImie.Location = new System.Drawing.Point(133, 9);
+            this.LabelImie.Name = "LabelImie";
+            this.LabelImie.Size = new System.Drawing.Size(26, 13);
+            this.LabelImie.TabIndex = 7;
+            this.LabelImie.Text = "Imię";
             // 
             // ImieTextBox
             // 
@@ -91,14 +94,14 @@
             this.ImieTextBox.Size = new System.Drawing.Size(115, 20);
             this.ImieTextBox.TabIndex = 6;
             // 
-            // label3
+            // LabelNazwisko
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(254, 9);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(53, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "Nazwisko";
+            this.LabelNazwisko.AutoSize = true;
+            this.LabelNazwisko.Location = new System.Drawing.Point(254, 9);
+            this.LabelNazwisko.Name = "LabelNazwisko";
+            this.LabelNazwisko.Size = new System.Drawing.Size(53, 13);
+            this.LabelNazwisko.TabIndex = 9;
+            this.LabelNazwisko.Text = "Nazwisko";
             // 
             // NazwiskoTextBox
             // 
@@ -110,31 +113,69 @@
             // EditCheckBox
             // 
             this.EditCheckBox.AutoSize = true;
-            this.EditCheckBox.Location = new System.Drawing.Point(12, 54);
+            this.EditCheckBox.Location = new System.Drawing.Point(15, 73);
             this.EditCheckBox.Name = "EditCheckBox";
             this.EditCheckBox.Size = new System.Drawing.Size(78, 17);
             this.EditCheckBox.TabIndex = 10;
             this.EditCheckBox.Text = "edytuj wpis";
             this.EditCheckBox.UseVisualStyleBackColor = true;
             // 
-            // DodajKarte
+            // HasloTextBox
+            // 
+            this.HasloTextBox.Location = new System.Drawing.Point(254, 71);
+            this.HasloTextBox.Name = "HasloTextBox";
+            this.HasloTextBox.PasswordChar = '*';
+            this.HasloTextBox.Size = new System.Drawing.Size(115, 20);
+            this.HasloTextBox.TabIndex = 12;
+            this.HasloTextBox.Click += new System.EventHandler(this.HasloTextBox_Click);
+            // 
+            // LoginTextBox
+            // 
+            this.LoginTextBox.Location = new System.Drawing.Point(133, 71);
+            this.LoginTextBox.Name = "LoginTextBox";
+            this.LoginTextBox.Size = new System.Drawing.Size(115, 20);
+            this.LoginTextBox.TabIndex = 11;
+            // 
+            // LabelHaslo
+            // 
+            this.LabelHaslo.AutoSize = true;
+            this.LabelHaslo.Location = new System.Drawing.Point(254, 55);
+            this.LabelHaslo.Name = "LabelHaslo";
+            this.LabelHaslo.Size = new System.Drawing.Size(34, 13);
+            this.LabelHaslo.TabIndex = 14;
+            this.LabelHaslo.Text = "Haslo";
+            // 
+            // LabelLogin
+            // 
+            this.LabelLogin.AutoSize = true;
+            this.LabelLogin.Location = new System.Drawing.Point(133, 55);
+            this.LabelLogin.Name = "LabelLogin";
+            this.LabelLogin.Size = new System.Drawing.Size(33, 13);
+            this.LabelLogin.TabIndex = 13;
+            this.LabelLogin.Text = "Login";
+            // 
+            // OknoDodawania
             // 
             this.AcceptButton = this.AddButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 112);
+            this.ClientSize = new System.Drawing.Size(381, 130);
+            this.Controls.Add(this.LabelHaslo);
+            this.Controls.Add(this.LabelLogin);
+            this.Controls.Add(this.HasloTextBox);
+            this.Controls.Add(this.LoginTextBox);
             this.Controls.Add(this.EditCheckBox);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.LabelNazwisko);
             this.Controls.Add(this.NazwiskoTextBox);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.LabelImie);
             this.Controls.Add(this.ImieTextBox);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.LabelID);
             this.Controls.Add(this.UIDtextBox);
             this.Controls.Add(this.CancelButton);
             this.Controls.Add(this.AddButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.HelpButton = true;
-            this.Name = "DodajKarte";
+            this.Name = "OknoDodawania";
             this.Text = "Dodaj kartę";
             this.TopMost = true;
             this.ResumeLayout(false);
@@ -147,11 +188,15 @@
         private System.Windows.Forms.Button AddButton;
         private new System.Windows.Forms.Button CancelButton;
         private System.Windows.Forms.TextBox UIDtextBox;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label LabelID;
+        private System.Windows.Forms.Label LabelImie;
         private System.Windows.Forms.TextBox ImieTextBox;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label LabelNazwisko;
         private System.Windows.Forms.TextBox NazwiskoTextBox;
         private System.Windows.Forms.CheckBox EditCheckBox;
+        private System.Windows.Forms.TextBox HasloTextBox;
+        private System.Windows.Forms.TextBox LoginTextBox;
+        private System.Windows.Forms.Label LabelHaslo;
+        private System.Windows.Forms.Label LabelLogin;
     }
 }

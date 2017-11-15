@@ -46,19 +46,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DodajKarte.cs">
+    <Compile Include="OknoDodawania.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DodajKarte.Designer.cs">
-      <DependentUpon>DodajKarte.cs</DependentUpon>
+    <Compile Include="OknoDodawania.Designer.cs">
+      <DependentUpon>OknoDodawania.cs</DependentUpon>
     </Compile>
+    <Compile Include="OknoAdmina.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OknoAdmina.Designer.cs">
+      <DependentUpon>OknoAdmina.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MySqlEngineKlient.cs" />
     <Compile Include="OknoGlowne.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="OknoGlowne.Designer.cs">
       <DependentUpon>OknoGlowne.cs</DependentUpon>
     </Compile>
-    <Compile Include="MySqlEngineKlient.cs" />
     <Compile Include="OknoLogowania.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,8 +73,11 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="DodajKarte.resx">
-      <DependentUpon>DodajKarte.cs</DependentUpon>
+    <EmbeddedResource Include="OknoDodawania.resx">
+      <DependentUpon>OknoDodawania.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OknoAdmina.resx">
+      <DependentUpon>OknoAdmina.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OknoGlowne.resx">
       <DependentUpon>OknoGlowne.cs</DependentUpon>

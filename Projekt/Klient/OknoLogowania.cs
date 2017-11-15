@@ -36,9 +36,9 @@ namespace Klient
                     {
                         //Zalogowal sie administrator
                         Hide();
-                        OknoGlowne OG = new OknoGlowne(lista);
-                        OG.Closed += (s, args) => Close();
-                        OG.Show();
+                        OknoAdmina OA = new OknoAdmina(lista);
+                        OA.Closed += (s, args) => Close();
+                        OA.Show();
                     }
                     else
                     {
