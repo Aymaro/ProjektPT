@@ -138,10 +138,10 @@ namespace Klient
                 else
                 {
                     //dodanie nowego
-                    if (UIDtextBox.Text == "" || ImieTextBox.Text == ""
-                                              || NazwiskoTextBox.Text == ""
-                                              || LoginTextBox.Text == ""
-                                              || HasloTextBox.Text == "")
+                    if ( ImieTextBox.Text == ""
+                      || NazwiskoTextBox.Text == ""
+                      || LoginTextBox.Text == ""
+                      || HasloTextBox.Text == "")
                     {
                         MessageBox.Show("Błąd! Żadne z pól nie może być puste!", "Błąd!", MessageBoxButtons.OK);
                     }

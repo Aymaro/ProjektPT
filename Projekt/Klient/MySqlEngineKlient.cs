@@ -23,6 +23,7 @@ namespace Klient
         private void Initialize()
         {
             server = "aymaro.pl";
+            //server = "178.19.104.18";
             database = "aymaropl_pt";
             uid = "aymaropl_admin";
             password = "95^rvT_{T]7#";
@@ -385,6 +386,68 @@ namespace Klient
                 this.CloseConnection();
             }
         }
+        public bool CheckIfExist(string name)
+        {
+
+            string query = String.Format("SELECT COUNT(*) FROM information_schema.tables WHERE table_schema = 'aymaropl_pt' AND table_name = '{0}'", name);
+            bool result = false;
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    result = dataReader.GetBoolean(0);
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                if (result == true)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+
+
+            return false;
+        }
+        public void CreateTable(string name)
+        {
+
+            string query = String.Format("CREATE TABLE `aymaropl_pt`.`{0}` " +
+                "(`data` DATE NOT NULL," +
+                "`przedmiot` VARCHAR(45) NOT NULL," +
+                "`start` TIME NOT NULL," +
+                "`koniec` TIME NOT NULL," +
+                "PRIMARY KEY(`data`))" +
+                "ENGINE = InnoDB; ", name);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
         public List<string> LoginUser(string login, string password)
         {
             string query = String.Format("SELECT ID, Imie, Nazwisko FROM wykladowcy WHERE login = '{0}' and haslo = '{1}'", login, password);
@@ -444,5 +507,6 @@ namespace Klient
             // Return the hexadecimal string.
             return sBuilder.ToString();
         }
+       
     }
 }

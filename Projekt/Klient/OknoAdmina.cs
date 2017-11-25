@@ -170,6 +170,10 @@ namespace Klient
         //karta wykladowcow
         private void RefreshTeachers_Click(object sender, EventArgs e)
         {
+            RefreshTeachersTmp();
+        }
+        private void RefreshTeachersTmp()
+        {
             RefreshTeachersListThread = new Thread(RefreshTeachersListThreadDoWork);
             RefreshTeachersListThread.Start();
             RefreshTeachers.Enabled = false;
@@ -204,7 +208,30 @@ namespace Klient
         }
         private void RemoveTeacher_Click(object sender, EventArgs e)
         {
+            if (TeachersGrid.SelectedCells.Count == 0 || TeachersGrid.CurrentCell.RowIndex > TeachersGrid.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
+            }
+            else if (TeachersGrid.SelectedCells.Count > 1 && TeachersGrid.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
+            }
+            else
+            {
+                string ID = TeachersGrid.Rows[TeachersGrid.CurrentCell.RowIndex].Cells[0].Value.ToString();
 
+                DialogResult result = MessageBox.Show("Czy aby na pewno chcesz usunąć ten element?", "Potwierdź usunięcie.", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    msql.DeleteTeacher(ID);
+                }
+                else
+                {
+                    return;
+                }
+
+            }
         }
         private void EditTeacher_Click(object sender, EventArgs e)
         {
@@ -227,6 +254,28 @@ namespace Klient
                 using (OknoDodawania karta = new OknoDodawania(this, dane[0], dane[1], dane[2], dane[3],dane[4]))
                 {
                     karta.ShowDialog();
+                }
+            }
+        }
+        private void CheckTables_Click(object sender, EventArgs e)
+        {
+            List<string>[] Lista = new List<string>[5];
+            Lista = msql.SelectTeachersList();
+            int TeachersCount = Lista[0].Count;
+            int added = 0;
+            int exist = 0;
+            for (int i = 0; i < Lista[0].Count; i++)
+            {
+                string name = "w_" + Lista[1][i].ToLower() + "_" + Lista[2][i].ToLower();
+                if (msql.CheckIfExist(name) == false)
+                {//nie ma takiej tabeli i ja tworzymy
+                    added++;
+                    msql.CreateTable(name);
+                }
+                else
+                {
+                    exist++;
+                    continue;
                 }
             }
         }

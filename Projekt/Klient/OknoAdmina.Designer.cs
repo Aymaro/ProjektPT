@@ -58,15 +58,16 @@
             this.AddTeacher = new System.Windows.Forms.Button();
             this.RefreshTeachers = new System.Windows.Forms.Button();
             this.TeachersGrid = new System.Windows.Forms.DataGridView();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.wylogujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataGridViewTextBoxColumn6 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn7 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn8 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.haslo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.wylogujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CheckTables = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).BeginInit();
             this.AdminTabPageBox.SuspendLayout();
@@ -309,6 +310,7 @@
             // 
             // ListaWykladowcowTabPage
             // 
+            this.ListaWykladowcowTabPage.Controls.Add(this.CheckTables);
             this.ListaWykladowcowTabPage.Controls.Add(this.EditTeacher);
             this.ListaWykladowcowTabPage.Controls.Add(this.RemoveTeacher);
             this.ListaWykladowcowTabPage.Controls.Add(this.AddTeacher);
@@ -378,6 +380,37 @@
             this.TeachersGrid.Size = new System.Drawing.Size(449, 285);
             this.TeachersGrid.TabIndex = 6;
             // 
+            // dataGridViewTextBoxColumn6
+            // 
+            this.dataGridViewTextBoxColumn6.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn7
+            // 
+            this.dataGridViewTextBoxColumn7.HeaderText = "Imie";
+            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
+            this.dataGridViewTextBoxColumn7.ReadOnly = true;
+            // 
+            // dataGridViewTextBoxColumn8
+            // 
+            this.dataGridViewTextBoxColumn8.HeaderText = "Nazwisko";
+            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
+            this.dataGridViewTextBoxColumn8.ReadOnly = true;
+            // 
+            // Login
+            // 
+            this.Login.HeaderText = "Login";
+            this.Login.Name = "Login";
+            this.Login.ReadOnly = true;
+            // 
+            // haslo
+            // 
+            this.haslo.HeaderText = "Haslo";
+            this.haslo.Name = "haslo";
+            this.haslo.ReadOnly = true;
+            this.haslo.Visible = false;
+            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -411,36 +444,15 @@
             this.wylogujToolStripMenuItem.Text = "Wyloguj";
             this.wylogujToolStripMenuItem.Click += new System.EventHandler(this.wylogujToolStripMenuItem_Click);
             // 
-            // dataGridViewTextBoxColumn6
+            // CheckTables
             // 
-            this.dataGridViewTextBoxColumn6.HeaderText = "ID";
-            this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
-            this.dataGridViewTextBoxColumn6.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn7
-            // 
-            this.dataGridViewTextBoxColumn7.HeaderText = "Imie";
-            this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.ReadOnly = true;
-            // 
-            // dataGridViewTextBoxColumn8
-            // 
-            this.dataGridViewTextBoxColumn8.HeaderText = "Nazwisko";
-            this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.ReadOnly = true;
-            // 
-            // Login
-            // 
-            this.Login.HeaderText = "Login";
-            this.Login.Name = "Login";
-            this.Login.ReadOnly = true;
-            // 
-            // haslo
-            // 
-            this.haslo.HeaderText = "Haslo";
-            this.haslo.Name = "haslo";
-            this.haslo.ReadOnly = true;
-            this.haslo.Visible = false;
+            this.CheckTables.Location = new System.Drawing.Point(335, 6);
+            this.CheckTables.Name = "CheckTables";
+            this.CheckTables.Size = new System.Drawing.Size(95, 23);
+            this.CheckTables.TabIndex = 10;
+            this.CheckTables.Text = "Sprawdź tabele";
+            this.CheckTables.UseVisualStyleBackColor = true;
+            this.CheckTables.Click += new System.EventHandler(this.CheckTables_Click);
             // 
             // OknoAdmina
             // 
@@ -509,6 +521,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn8;
         private System.Windows.Forms.DataGridViewTextBoxColumn Login;
         private System.Windows.Forms.DataGridViewTextBoxColumn haslo;
+        private System.Windows.Forms.Button CheckTables;
     }
 }
 
