@@ -34,6 +34,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.LoginTextBox = new System.Windows.Forms.TextBox();
             this.PasswordTextBox = new System.Windows.Forms.TextBox();
+            this.rememberMeCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // ExitButton
@@ -89,12 +90,23 @@
             this.PasswordTextBox.Size = new System.Drawing.Size(150, 20);
             this.PasswordTextBox.TabIndex = 1;
             // 
+            // rememberMeCheckBox
+            // 
+            this.rememberMeCheckBox.AutoSize = true;
+            this.rememberMeCheckBox.Location = new System.Drawing.Point(118, 75);
+            this.rememberMeCheckBox.Name = "rememberMeCheckBox";
+            this.rememberMeCheckBox.Size = new System.Drawing.Size(101, 17);
+            this.rememberMeCheckBox.TabIndex = 6;
+            this.rememberMeCheckBox.Text = "zapamiętaj mnie";
+            this.rememberMeCheckBox.UseVisualStyleBackColor = true;
+            // 
             // OknoLogowania
             // 
             this.AcceptButton = this.LoginButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(329, 100);
+            this.Controls.Add(this.rememberMeCheckBox);
             this.Controls.Add(this.PasswordTextBox);
             this.Controls.Add(this.LoginTextBox);
             this.Controls.Add(this.label2);
@@ -116,5 +128,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox LoginTextBox;
         private System.Windows.Forms.TextBox PasswordTextBox;
+        private System.Windows.Forms.CheckBox rememberMeCheckBox;
     }
 }

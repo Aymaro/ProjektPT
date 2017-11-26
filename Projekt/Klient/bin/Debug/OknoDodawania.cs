@@ -176,12 +176,10 @@ namespace Klient
                 }
             }
         }
-
         private void HasloTextBox_Click(object sender, EventArgs e)
         {
             HasloTextBox.SelectAll();
         }
-
         private void OknoDodawania_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (akcja == "w")
