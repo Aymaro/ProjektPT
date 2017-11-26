@@ -26,15 +26,24 @@ namespace Klient
             Dane = _Dane;
             Text = String.Format("Użytkownik: {0} {1}", Dane[1], Dane[2]);
         }
+        //ładowanie formularza
+        private void OknoAdmina_Load(object sender, EventArgs e)
+        {
+            RefreshUsersTmp();
+        }
         //ciało aplikacji
         //karta studentow i kart 
         private void RefreshUsers_Click(object sender, EventArgs e)
+        {
+            RefreshUsersTmp();
+        }
+        public void RefreshUsersTmp()
         {
             RefreshUsersListThread = new Thread(RefreshUsersThreadDoWork);
             RefreshUsersListThread.Start();
             RefreshUsers.Enabled = false;
         }
-        void RefreshUsersThreadDoWork()
+        private void RefreshUsersThreadDoWork()
 
         {
             List<string>[] Lista = new List<string>[3];
@@ -80,6 +89,7 @@ namespace Klient
                 if (result == DialogResult.Yes)
                 {
                     msql.DeleteUser(UID);
+                    RefreshUsersTmp();
                 }
                 else
                 {
@@ -89,6 +99,14 @@ namespace Klient
             }
         }
         private void EditUser_Click(object sender, EventArgs e)
+        {
+            EditUserTmp();
+        }
+        private void usersGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            EditUserTmp();
+        }
+        private void EditUserTmp()
         {
             if (usersGrid.SelectedCells.Count == 0 || usersGrid.CurrentCell.RowIndex > usersGrid.Rows.Count)
             {
@@ -111,16 +129,19 @@ namespace Klient
                     karta.ShowDialog();
                 }
             }
-
         }
         //karta logu
         private void RefreshLog_Click(object sender, EventArgs e)
+        {
+            RefreshLogTmp();
+        }
+        private void RefreshLogTmp()
         {
             RefreshLogThread = new Thread(RefreshLogThreadDoWork);
             RefreshLogThread.Start();
             RefreshLog.Enabled = false;
         }
-        void RefreshLogThreadDoWork()
+        private void RefreshLogThreadDoWork()
         {
             List<string>[] Lista = new List<string>[6];
             Lista = msql.SelectLog();
@@ -143,11 +164,15 @@ namespace Klient
         //karta listy przedmiotow
         private void RefreshSubjectsList_Click(object sender, EventArgs e)
         {
+            RefreshSubjectsListTmp();
+        }
+        private void RefreshSubjectsListTmp()
+        {
             RefreshSubjectsListThread = new Thread(RefreshSubjectsListThreadDoWork);
             RefreshSubjectsListThread.Start();
             RefreshSubjectsList.Enabled = false;
         }
-        void RefreshSubjectsListThreadDoWork()
+        private void RefreshSubjectsListThreadDoWork()
         {
             List<string>[] Lista = new List<string>[2];
             Lista = msql.SelectSubjectList();
@@ -172,13 +197,13 @@ namespace Klient
         {
             RefreshTeachersTmp();
         }
-        private void RefreshTeachersTmp()
+        public void RefreshTeachersTmp()
         {
             RefreshTeachersListThread = new Thread(RefreshTeachersListThreadDoWork);
             RefreshTeachersListThread.Start();
             RefreshTeachers.Enabled = false;
         }
-        void RefreshTeachersListThreadDoWork()
+        private void RefreshTeachersListThreadDoWork()
         {
             List<string>[] Lista = new List<string>[5];
             Lista = msql.SelectTeachersList();
@@ -225,6 +250,7 @@ namespace Klient
                 if (result == DialogResult.Yes)
                 {
                     msql.DeleteTeacher(ID);
+                    RefreshTeachersTmp();
                 }
                 else
                 {
@@ -270,7 +296,7 @@ namespace Klient
                 if (msql.CheckIfExist(name) == false)
                 {//nie ma takiej tabeli i ja tworzymy
                     added++;
-                    msql.CreateTable(name);
+                    msql.CreateTeacherTable(name);
                 }
                 else
                 {
@@ -278,6 +304,11 @@ namespace Klient
                     continue;
                 }
             }
+            MessageBox.Show(String.Format(  "Liczba wykładowców: {0}\n" +
+                                            "Liczba utworzonych nowych tabel: {1}\n" +
+                                            "Liczba istniejących tabel: {2}",
+                                            TeachersCount, added, exist),
+                                            "Rezultat", MessageBoxButtons.OK);
         }
         //gorna listwa menu
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
@@ -297,7 +328,5 @@ namespace Klient
                             "aplikacji prosze słać na maila:\n" +
                             "michal.parus@gmail.com");
         }
-
-        
     }
 }

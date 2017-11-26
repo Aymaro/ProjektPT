@@ -178,6 +178,7 @@
             this.Name = "OknoDodawania";
             this.Text = "Dodaj kartę";
             this.TopMost = true;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.OknoDodawania_FormClosed);
             this.ResumeLayout(false);
             this.PerformLayout();
 

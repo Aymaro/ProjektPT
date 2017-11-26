@@ -37,7 +37,10 @@ namespace Klient
         {
             try
             {
-                connection.Open();
+                if(connection.State != System.Data.ConnectionState.Open)
+                {
+                    connection.Open();
+                }
                 return true;
             }
             catch (MySqlException ex)
@@ -424,16 +427,35 @@ namespace Klient
 
             return false;
         }
-        public void CreateTable(string name)
+        public void CreateTeacherTable(string name)
         {
 
             string query = String.Format("CREATE TABLE `aymaropl_pt`.`{0}` " +
                 "(`data` DATE NOT NULL," +
+                "`rokstudencki` VARCHAR(45)," +
                 "`przedmiot` VARCHAR(45) NOT NULL," +
                 "`start` TIME NOT NULL," +
                 "`koniec` TIME NOT NULL," +
                 "PRIMARY KEY(`data`))" +
                 "ENGINE = InnoDB; ", name);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        public void RenameTable(string table, string newName)
+        {
+
+            string query = String.Format("RENAME TABLE {0} TO {1};", table, newName);
 
             //open connection
             if (this.OpenConnection() == true)

@@ -102,8 +102,9 @@
             this.usersGrid.Location = new System.Drawing.Point(6, 35);
             this.usersGrid.Name = "usersGrid";
             this.usersGrid.ReadOnly = true;
-            this.usersGrid.Size = new System.Drawing.Size(352, 285);
+            this.usersGrid.Size = new System.Drawing.Size(352, 270);
             this.usersGrid.TabIndex = 1;
+            this.usersGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersGrid_CellDoubleClick);
             // 
             // UID
             // 
@@ -136,10 +137,11 @@
             this.RDR,
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
-            this.LogGrid.Location = new System.Drawing.Point(6, 35);
+            this.LogGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.LogGrid.Location = new System.Drawing.Point(3, 38);
             this.LogGrid.Name = "LogGrid";
             this.LogGrid.ReadOnly = true;
-            this.LogGrid.Size = new System.Drawing.Size(680, 285);
+            this.LogGrid.Size = new System.Drawing.Size(686, 270);
             this.LogGrid.TabIndex = 2;
             // 
             // ID
@@ -199,7 +201,7 @@
             this.AdminTabPageBox.Location = new System.Drawing.Point(12, 27);
             this.AdminTabPageBox.Name = "AdminTabPageBox";
             this.AdminTabPageBox.SelectedIndex = 0;
-            this.AdminTabPageBox.Size = new System.Drawing.Size(700, 352);
+            this.AdminTabPageBox.Size = new System.Drawing.Size(700, 337);
             this.AdminTabPageBox.TabIndex = 4;
             // 
             // ListaUzytkownikowTabPage
@@ -212,7 +214,7 @@
             this.ListaUzytkownikowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaUzytkownikowTabPage.Name = "ListaUzytkownikowTabPage";
             this.ListaUzytkownikowTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ListaUzytkownikowTabPage.Size = new System.Drawing.Size(692, 326);
+            this.ListaUzytkownikowTabPage.Size = new System.Drawing.Size(692, 311);
             this.ListaUzytkownikowTabPage.TabIndex = 0;
             this.ListaUzytkownikowTabPage.Text = "Lista użytkowników/kart";
             this.ListaUzytkownikowTabPage.UseVisualStyleBackColor = true;
@@ -254,7 +256,7 @@
             this.LogTabPage.Location = new System.Drawing.Point(4, 22);
             this.LogTabPage.Name = "LogTabPage";
             this.LogTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.LogTabPage.Size = new System.Drawing.Size(692, 326);
+            this.LogTabPage.Size = new System.Drawing.Size(692, 311);
             this.LogTabPage.TabIndex = 1;
             this.LogTabPage.Text = "Log";
             this.LogTabPage.UseVisualStyleBackColor = true;
@@ -266,7 +268,7 @@
             this.ListaPrzedmiotowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaPrzedmiotowTabPage.Name = "ListaPrzedmiotowTabPage";
             this.ListaPrzedmiotowTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ListaPrzedmiotowTabPage.Size = new System.Drawing.Size(692, 326);
+            this.ListaPrzedmiotowTabPage.Size = new System.Drawing.Size(692, 311);
             this.ListaPrzedmiotowTabPage.TabIndex = 2;
             this.ListaPrzedmiotowTabPage.Text = "Lista przedmiotów";
             this.ListaPrzedmiotowTabPage.UseVisualStyleBackColor = true;
@@ -318,7 +320,7 @@
             this.ListaWykladowcowTabPage.Controls.Add(this.TeachersGrid);
             this.ListaWykladowcowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaWykladowcowTabPage.Name = "ListaWykladowcowTabPage";
-            this.ListaWykladowcowTabPage.Size = new System.Drawing.Size(692, 326);
+            this.ListaWykladowcowTabPage.Size = new System.Drawing.Size(692, 311);
             this.ListaWykladowcowTabPage.TabIndex = 3;
             this.ListaWykladowcowTabPage.Text = "Lista wykładowców";
             this.ListaWykladowcowTabPage.UseVisualStyleBackColor = true;
@@ -377,7 +379,7 @@
             this.TeachersGrid.Location = new System.Drawing.Point(6, 35);
             this.TeachersGrid.Name = "TeachersGrid";
             this.TeachersGrid.ReadOnly = true;
-            this.TeachersGrid.Size = new System.Drawing.Size(449, 285);
+            this.TeachersGrid.Size = new System.Drawing.Size(449, 273);
             this.TeachersGrid.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn6
@@ -464,6 +466,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "OknoAdmina";
             this.Text = "Klient";
+            this.Load += new System.EventHandler(this.OknoAdmina_Load);
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).EndInit();
             this.AdminTabPageBox.ResumeLayout(false);

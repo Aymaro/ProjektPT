@@ -8,6 +8,8 @@ namespace Klient
         private OknoAdmina OA;
         private string UID = null;
         private string haslo = null;
+        private string imie = null;
+        private string nazwisko = null;
         string akcja = null;
 
         //Dodawanie uzytkownika/karty
@@ -58,6 +60,8 @@ namespace Klient
             akcja = "w";
             LabelID.Text = "ID";
             haslo = Haslo;
+            imie = Imie;
+            nazwisko = Nazwisko;
             UIDtextBox.Text = _ID;
             //UIDtextBox.Enabled = false;
             UIDtextBox.ReadOnly = true;
@@ -79,7 +83,9 @@ namespace Klient
                 if (EditCheckBox.Checked)
                 {
                     //eddycja wpisu
-                    if (UIDtextBox.Text == "" || ImieTextBox.Text == "" || NazwiskoTextBox.Text == "")
+                    if (    UIDtextBox.Text == "" 
+                         || ImieTextBox.Text == "" 
+                         || NazwiskoTextBox.Text == "")
                     {
                         MessageBox.Show("Błąd! Żadne z pól nie może być puste!", "Błąd!", MessageBoxButtons.OK);
                     }
@@ -99,7 +105,9 @@ namespace Klient
                 else
                 {
                     //dodanie nowego
-                    if (UIDtextBox.Text == "" || ImieTextBox.Text == "" || NazwiskoTextBox.Text == "")
+                    if (   UIDtextBox.Text == "" 
+                        || ImieTextBox.Text == "" 
+                        || NazwiskoTextBox.Text == "")
                     {
                         MessageBox.Show("Błąd! Żadne z pól nie może być puste!", "Błąd!", MessageBoxButtons.OK);
                     }
@@ -124,6 +132,7 @@ namespace Klient
                     }
                     else
                     {
+                        //sprawdza czy haslo zostalo zmienione 
                         if (HasloTextBox.Text == haslo)
                         {
                             OA.msql.UptadeTeacher(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text, LoginTextBox.Text, HasloTextBox.Text);
@@ -132,6 +141,20 @@ namespace Klient
                         {
                             OA.msql.UptadeTeacher(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text, LoginTextBox.Text, OA.msql.MD5Hash(HasloTextBox.Text));
                         }
+
+                        //sprawdzamy czy imie lub nazwisko zostalo zmienione
+                        if (imie == ImieTextBox.Text && nazwisko == NazwiskoTextBox.Text)
+                        {
+                            Close();
+                        }
+                        else
+                        {
+                            string oldName = String.Format("w_{0}_{1}", imie.ToLower(), nazwisko.ToLower());
+                            string newName = String.Format("w_{0}_{1}", ImieTextBox.Text.ToLower(), NazwiskoTextBox.Text.ToLower());
+                            OA.msql.RenameTable(oldName, newName);
+                        }
+                        
+
                         Close();
                     }
                 }
@@ -157,6 +180,18 @@ namespace Klient
         private void HasloTextBox_Click(object sender, EventArgs e)
         {
             HasloTextBox.SelectAll();
+        }
+
+        private void OknoDodawania_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (akcja == "w")
+            {
+                OA.RefreshTeachersTmp();
+            }
+            else if (akcja == "k")
+            {
+                OA.RefreshUsersTmp();
+            }
         }
     }
 }
