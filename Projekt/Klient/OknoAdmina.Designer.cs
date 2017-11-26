@@ -53,6 +53,7 @@
             this.dataGridViewTextBoxColumn4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dataGridViewTextBoxColumn5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ListaWykladowcowTabPage = new System.Windows.Forms.TabPage();
+            this.CheckTables = new System.Windows.Forms.Button();
             this.EditTeacher = new System.Windows.Forms.Button();
             this.RemoveTeacher = new System.Windows.Forms.Button();
             this.AddTeacher = new System.Windows.Forms.Button();
@@ -67,7 +68,6 @@
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wylogujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CheckTables = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).BeginInit();
             this.AdminTabPageBox.SuspendLayout();
@@ -203,6 +203,7 @@
             this.AdminTabPageBox.SelectedIndex = 0;
             this.AdminTabPageBox.Size = new System.Drawing.Size(700, 337);
             this.AdminTabPageBox.TabIndex = 4;
+            this.AdminTabPageBox.Selected += new System.Windows.Forms.TabControlEventHandler(this.AdminTabPageBox_Selected);
             // 
             // ListaUzytkownikowTabPage
             // 
@@ -325,6 +326,16 @@
             this.ListaWykladowcowTabPage.Text = "Lista wykładowców";
             this.ListaWykladowcowTabPage.UseVisualStyleBackColor = true;
             // 
+            // CheckTables
+            // 
+            this.CheckTables.Location = new System.Drawing.Point(335, 6);
+            this.CheckTables.Name = "CheckTables";
+            this.CheckTables.Size = new System.Drawing.Size(95, 23);
+            this.CheckTables.TabIndex = 10;
+            this.CheckTables.Text = "Sprawdź tabele";
+            this.CheckTables.UseVisualStyleBackColor = true;
+            this.CheckTables.Click += new System.EventHandler(this.CheckTables_Click);
+            // 
             // EditTeacher
             // 
             this.EditTeacher.Location = new System.Drawing.Point(254, 6);
@@ -445,16 +456,6 @@
             this.wylogujToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.wylogujToolStripMenuItem.Text = "Wyloguj";
             this.wylogujToolStripMenuItem.Click += new System.EventHandler(this.wylogujToolStripMenuItem_Click);
-            // 
-            // CheckTables
-            // 
-            this.CheckTables.Location = new System.Drawing.Point(335, 6);
-            this.CheckTables.Name = "CheckTables";
-            this.CheckTables.Size = new System.Drawing.Size(95, 23);
-            this.CheckTables.TabIndex = 10;
-            this.CheckTables.Text = "Sprawdź tabele";
-            this.CheckTables.UseVisualStyleBackColor = true;
-            this.CheckTables.Click += new System.EventHandler(this.CheckTables_Click);
             // 
             // OknoAdmina
             // 

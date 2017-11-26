@@ -328,5 +328,26 @@ namespace Klient
                             "aplikacji prosze słać na maila:\n" +
                             "michal.parus@gmail.com");
         }
+
+        private void AdminTabPageBox_Selected(object sender, TabControlEventArgs e)
+        {
+            switch (AdminTabPageBox.SelectedIndex)
+            {
+                case 0:
+                    RefreshUsersTmp();
+                    break;
+                case 1:
+                    RefreshLogTmp();
+                    break;
+                case 2:
+                    RefreshSubjectsListTmp();
+                    break;
+                case 3:
+                    RefreshTeachersTmp();
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }
