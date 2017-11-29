@@ -42,7 +42,17 @@
             this.dataGridViewTextBoxColumn3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.RefreshLog = new System.Windows.Forms.Button();
             this.AdminTabPageBox = new System.Windows.Forms.TabControl();
-            this.ListaUzytkownikowTabPage = new System.Windows.Forms.TabPage();
+            this.ListaStudentowTabPage = new System.Windows.Forms.TabPage();
+            this.editYearButton = new System.Windows.Forms.Button();
+            this.removeYearButton = new System.Windows.Forms.Button();
+            this.addYearButton = new System.Windows.Forms.Button();
+            this.yearsRefreshButton = new System.Windows.Forms.Button();
+            this.yearsGridView = new System.Windows.Forms.DataGridView();
+            this.dataGridViewTextBoxColumn9 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rok = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.wydzial = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Kierunek = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.EditUser = new System.Windows.Forms.Button();
             this.RemoveUser = new System.Windows.Forms.Button();
             this.AddUser = new System.Windows.Forms.Button();
@@ -71,7 +81,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).BeginInit();
             this.AdminTabPageBox.SuspendLayout();
-            this.ListaUzytkownikowTabPage.SuspendLayout();
+            this.ListaStudentowTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.yearsGridView)).BeginInit();
             this.LogTabPage.SuspendLayout();
             this.ListaPrzedmiotowTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.SubjectsListGrid)).BeginInit();
@@ -102,7 +113,7 @@
             this.usersGrid.Location = new System.Drawing.Point(6, 35);
             this.usersGrid.Name = "usersGrid";
             this.usersGrid.ReadOnly = true;
-            this.usersGrid.Size = new System.Drawing.Size(352, 270);
+            this.usersGrid.Size = new System.Drawing.Size(346, 270);
             this.usersGrid.TabIndex = 1;
             this.usersGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersGrid_CellDoubleClick);
             // 
@@ -141,7 +152,7 @@
             this.LogGrid.Location = new System.Drawing.Point(3, 38);
             this.LogGrid.Name = "LogGrid";
             this.LogGrid.ReadOnly = true;
-            this.LogGrid.Size = new System.Drawing.Size(686, 270);
+            this.LogGrid.Size = new System.Drawing.Size(867, 270);
             this.LogGrid.TabIndex = 2;
             // 
             // ID
@@ -194,31 +205,128 @@
             // 
             // AdminTabPageBox
             // 
-            this.AdminTabPageBox.Controls.Add(this.ListaUzytkownikowTabPage);
+            this.AdminTabPageBox.Controls.Add(this.ListaStudentowTabPage);
             this.AdminTabPageBox.Controls.Add(this.LogTabPage);
             this.AdminTabPageBox.Controls.Add(this.ListaPrzedmiotowTabPage);
             this.AdminTabPageBox.Controls.Add(this.ListaWykladowcowTabPage);
             this.AdminTabPageBox.Location = new System.Drawing.Point(12, 27);
             this.AdminTabPageBox.Name = "AdminTabPageBox";
             this.AdminTabPageBox.SelectedIndex = 0;
-            this.AdminTabPageBox.Size = new System.Drawing.Size(700, 337);
+            this.AdminTabPageBox.Size = new System.Drawing.Size(881, 337);
             this.AdminTabPageBox.TabIndex = 4;
             this.AdminTabPageBox.Selected += new System.Windows.Forms.TabControlEventHandler(this.AdminTabPageBox_Selected);
             // 
-            // ListaUzytkownikowTabPage
+            // ListaStudentowTabPage
             // 
-            this.ListaUzytkownikowTabPage.Controls.Add(this.EditUser);
-            this.ListaUzytkownikowTabPage.Controls.Add(this.RemoveUser);
-            this.ListaUzytkownikowTabPage.Controls.Add(this.AddUser);
-            this.ListaUzytkownikowTabPage.Controls.Add(this.RefreshUsers);
-            this.ListaUzytkownikowTabPage.Controls.Add(this.usersGrid);
-            this.ListaUzytkownikowTabPage.Location = new System.Drawing.Point(4, 22);
-            this.ListaUzytkownikowTabPage.Name = "ListaUzytkownikowTabPage";
-            this.ListaUzytkownikowTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ListaUzytkownikowTabPage.Size = new System.Drawing.Size(692, 311);
-            this.ListaUzytkownikowTabPage.TabIndex = 0;
-            this.ListaUzytkownikowTabPage.Text = "Lista użytkowników/kart";
-            this.ListaUzytkownikowTabPage.UseVisualStyleBackColor = true;
+            this.ListaStudentowTabPage.Controls.Add(this.editYearButton);
+            this.ListaStudentowTabPage.Controls.Add(this.removeYearButton);
+            this.ListaStudentowTabPage.Controls.Add(this.addYearButton);
+            this.ListaStudentowTabPage.Controls.Add(this.yearsRefreshButton);
+            this.ListaStudentowTabPage.Controls.Add(this.yearsGridView);
+            this.ListaStudentowTabPage.Controls.Add(this.EditUser);
+            this.ListaStudentowTabPage.Controls.Add(this.RemoveUser);
+            this.ListaStudentowTabPage.Controls.Add(this.AddUser);
+            this.ListaStudentowTabPage.Controls.Add(this.RefreshUsers);
+            this.ListaStudentowTabPage.Controls.Add(this.usersGrid);
+            this.ListaStudentowTabPage.Location = new System.Drawing.Point(4, 22);
+            this.ListaStudentowTabPage.Name = "ListaStudentowTabPage";
+            this.ListaStudentowTabPage.Padding = new System.Windows.Forms.Padding(3);
+            this.ListaStudentowTabPage.Size = new System.Drawing.Size(873, 311);
+            this.ListaStudentowTabPage.TabIndex = 0;
+            this.ListaStudentowTabPage.Text = "Studenci";
+            this.ListaStudentowTabPage.UseVisualStyleBackColor = true;
+            // 
+            // editYearButton
+            // 
+            this.editYearButton.Location = new System.Drawing.Point(680, 6);
+            this.editYearButton.Name = "editYearButton";
+            this.editYearButton.Size = new System.Drawing.Size(75, 23);
+            this.editYearButton.TabIndex = 9;
+            this.editYearButton.Text = "Edytuj rok";
+            this.editYearButton.UseVisualStyleBackColor = true;
+            this.editYearButton.Click += new System.EventHandler(this.editYearButton_Click);
+            // 
+            // removeYearButton
+            // 
+            this.removeYearButton.Location = new System.Drawing.Point(599, 6);
+            this.removeYearButton.Name = "removeYearButton";
+            this.removeYearButton.Size = new System.Drawing.Size(75, 23);
+            this.removeYearButton.TabIndex = 8;
+            this.removeYearButton.Text = "Usuń rok";
+            this.removeYearButton.UseVisualStyleBackColor = true;
+            this.removeYearButton.Click += new System.EventHandler(this.removeYearButton_Click);
+            // 
+            // addYearButton
+            // 
+            this.addYearButton.Location = new System.Drawing.Point(514, 6);
+            this.addYearButton.Name = "addYearButton";
+            this.addYearButton.Size = new System.Drawing.Size(79, 23);
+            this.addYearButton.TabIndex = 7;
+            this.addYearButton.Text = "Dodaj rok";
+            this.addYearButton.UseVisualStyleBackColor = true;
+            this.addYearButton.Click += new System.EventHandler(this.addYearButton_Click);
+            // 
+            // yearsRefreshButton
+            // 
+            this.yearsRefreshButton.Location = new System.Drawing.Point(428, 6);
+            this.yearsRefreshButton.Name = "yearsRefreshButton";
+            this.yearsRefreshButton.Size = new System.Drawing.Size(80, 23);
+            this.yearsRefreshButton.TabIndex = 6;
+            this.yearsRefreshButton.Text = "Odśwież listę";
+            this.yearsRefreshButton.UseVisualStyleBackColor = true;
+            this.yearsRefreshButton.Click += new System.EventHandler(this.yearsRefreshButton_Click);
+            // 
+            // yearsGridView
+            // 
+            this.yearsGridView.AllowUserToAddRows = false;
+            this.yearsGridView.AllowUserToDeleteRows = false;
+            this.yearsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.yearsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewTextBoxColumn9,
+            this.rok,
+            this.wydzial,
+            this.Kierunek,
+            this.Column1});
+            this.yearsGridView.Location = new System.Drawing.Point(428, 35);
+            this.yearsGridView.Name = "yearsGridView";
+            this.yearsGridView.ReadOnly = true;
+            this.yearsGridView.Size = new System.Drawing.Size(439, 270);
+            this.yearsGridView.TabIndex = 5;
+            // 
+            // dataGridViewTextBoxColumn9
+            // 
+            this.dataGridViewTextBoxColumn9.HeaderText = "ID";
+            this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
+            this.dataGridViewTextBoxColumn9.ReadOnly = true;
+            this.dataGridViewTextBoxColumn9.Width = 40;
+            // 
+            // rok
+            // 
+            this.rok.HeaderText = "Rok";
+            this.rok.Name = "rok";
+            this.rok.ReadOnly = true;
+            this.rok.Width = 60;
+            // 
+            // wydzial
+            // 
+            this.wydzial.HeaderText = "Wydział";
+            this.wydzial.Name = "wydzial";
+            this.wydzial.ReadOnly = true;
+            this.wydzial.Width = 80;
+            // 
+            // Kierunek
+            // 
+            this.Kierunek.HeaderText = "Kierunek";
+            this.Kierunek.Name = "Kierunek";
+            this.Kierunek.ReadOnly = true;
+            this.Kierunek.Width = 90;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "LIczba studentów";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Width = 120;
             // 
             // EditUser
             // 
@@ -257,7 +365,7 @@
             this.LogTabPage.Location = new System.Drawing.Point(4, 22);
             this.LogTabPage.Name = "LogTabPage";
             this.LogTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.LogTabPage.Size = new System.Drawing.Size(692, 311);
+            this.LogTabPage.Size = new System.Drawing.Size(873, 311);
             this.LogTabPage.TabIndex = 1;
             this.LogTabPage.Text = "Log";
             this.LogTabPage.UseVisualStyleBackColor = true;
@@ -269,7 +377,7 @@
             this.ListaPrzedmiotowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaPrzedmiotowTabPage.Name = "ListaPrzedmiotowTabPage";
             this.ListaPrzedmiotowTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ListaPrzedmiotowTabPage.Size = new System.Drawing.Size(692, 311);
+            this.ListaPrzedmiotowTabPage.Size = new System.Drawing.Size(873, 311);
             this.ListaPrzedmiotowTabPage.TabIndex = 2;
             this.ListaPrzedmiotowTabPage.Text = "Lista przedmiotów";
             this.ListaPrzedmiotowTabPage.UseVisualStyleBackColor = true;
@@ -321,7 +429,7 @@
             this.ListaWykladowcowTabPage.Controls.Add(this.TeachersGrid);
             this.ListaWykladowcowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaWykladowcowTabPage.Name = "ListaWykladowcowTabPage";
-            this.ListaWykladowcowTabPage.Size = new System.Drawing.Size(692, 311);
+            this.ListaWykladowcowTabPage.Size = new System.Drawing.Size(873, 311);
             this.ListaWykladowcowTabPage.TabIndex = 3;
             this.ListaWykladowcowTabPage.Text = "Lista wykładowców";
             this.ListaWykladowcowTabPage.UseVisualStyleBackColor = true;
@@ -431,7 +539,7 @@
             this.wylogujToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(724, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(905, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -461,7 +569,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(724, 376);
+            this.ClientSize = new System.Drawing.Size(905, 376);
             this.Controls.Add(this.AdminTabPageBox);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -471,7 +579,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).EndInit();
             this.AdminTabPageBox.ResumeLayout(false);
-            this.ListaUzytkownikowTabPage.ResumeLayout(false);
+            this.ListaStudentowTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.yearsGridView)).EndInit();
             this.LogTabPage.ResumeLayout(false);
             this.ListaPrzedmiotowTabPage.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.SubjectsListGrid)).EndInit();
@@ -500,7 +609,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn3;
         private System.Windows.Forms.TabControl AdminTabPageBox;
-        private System.Windows.Forms.TabPage ListaUzytkownikowTabPage;
+        private System.Windows.Forms.TabPage ListaStudentowTabPage;
         private System.Windows.Forms.TabPage LogTabPage;
         private System.Windows.Forms.Button AddUser;
         private System.Windows.Forms.Button EditUser;
@@ -526,6 +635,16 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn Login;
         private System.Windows.Forms.DataGridViewTextBoxColumn haslo;
         private System.Windows.Forms.Button CheckTables;
+        private System.Windows.Forms.DataGridView yearsGridView;
+        private System.Windows.Forms.Button yearsRefreshButton;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn9;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rok;
+        private System.Windows.Forms.DataGridViewTextBoxColumn wydzial;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Kierunek;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.Button editYearButton;
+        private System.Windows.Forms.Button removeYearButton;
+        private System.Windows.Forms.Button addYearButton;
     }
 }
 

@@ -45,6 +45,7 @@ namespace Klient
             ImieTextBox.Text = Imie;
             NazwiskoTextBox.Text = Nazwisko;
             EditCheckBox.Checked = true;
+            EditCheckBox.Enabled = false;
             OA = _OA;
             //chowamy elementy przydatne przy dodawaniu wykladowcow
             LabelHaslo.Hide();

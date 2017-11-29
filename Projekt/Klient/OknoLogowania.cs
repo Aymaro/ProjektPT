@@ -16,7 +16,6 @@ namespace Klient
             addRegister();
             
 
-            //todo wczytanie inforamcji z registru czy juz nie bylem zalogowany
             readLoginFromRegister();
             
         }

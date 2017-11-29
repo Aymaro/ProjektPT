@@ -65,6 +65,12 @@
     <Compile Include="MySqlEngineKlient.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
+    <Compile Include="OknoDodwaniaRocznika.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OknoDodwaniaRocznika.Designer.cs">
+      <DependentUpon>OknoDodwaniaRocznika.cs</DependentUpon>
+    </Compile>
     <Compile Include="OknoGlowne.cs">
       <SubType>Form</SubType>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -92,6 +98,9 @@
     <EmbeddedResource Include="OknoAdmina.resx">
       <DependentUpon>OknoAdmina.cs</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OknoDodwaniaRocznika.resx">
+      <DependentUpon>OknoDodwaniaRocznika.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="OknoGlowne.resx">
       <DependentUpon>OknoGlowne.cs</DependentUpon>

@@ -7,13 +7,16 @@ namespace Klient
 {
     public partial class OknoAdmina : Form
     {
-        //dane globalne
+        //zmienne globalne
+        List<string> Dane;
+        public MySqlEngineKlient msql = new MySqlEngineKlient();
+        //wątki do odswiezania list
         Thread RefreshUsersListThread;
+        Thread RefreshYearsListThread;
         Thread RefreshLogThread;
         Thread RefreshSubjectsListThread;
         Thread RefreshTeachersListThread;
-        List<string> Dane;
-        public MySqlEngineKlient msql = new MySqlEngineKlient();
+
 
         //Konstruktory
         public OknoAdmina()
@@ -29,9 +32,9 @@ namespace Klient
         //ładowanie formularza
         private void OknoAdmina_Load(object sender, EventArgs e)
         {
-            RefreshUsersTmp();
+            //RefreshUsersTmp();
+            //RefreshYearsTmp();
         }
-        //ciało aplikacji
         //karta studentow i kart 
         private void RefreshUsers_Click(object sender, EventArgs e)
         {
@@ -65,7 +68,7 @@ namespace Klient
         }
         private void AddUser_Click(object sender, EventArgs e)
         {
-            using (OknoDodawania karta = new OknoDodawania(this,"k"))
+            using (OknoDodawania karta = new OknoDodawania(this, "k"))
             {
                 karta.ShowDialog();
             }
@@ -130,6 +133,119 @@ namespace Klient
                 }
             }
         }
+        //roczniki
+        private void yearsRefreshButton_Click(object sender, EventArgs e)
+        {
+            RefreshYearsTmp();
+        }
+        public void RefreshYearsTmp()
+        {
+            RefreshYearsListThread = new Thread(RefreshYearsThreadDoWork);
+            RefreshYearsListThread.Start();
+            yearsRefreshButton.Enabled = false;
+        }
+        private void RefreshYearsThreadDoWork()
+
+        {
+            List<string>[] Lista = new List<string>[5];
+            Lista = msql.SelectYearsList();
+            yearsGridView.Invoke(new Action(delegate ()
+            {
+                yearsGridView.Rows.Clear();
+                for (int i = 0; i < Lista[0].Count; i++)
+                {
+                    yearsGridView.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i], Lista[3][i], Lista[4][i]);
+                }
+            }));
+
+            yearsRefreshButton.Invoke(new Action(delegate ()
+            {
+                yearsRefreshButton.Enabled = true;
+            }));
+
+        }
+        private void addYearButton_Click(object sender, EventArgs e)
+        {
+            using (OknoDodwaniaRocznika karta = new OknoDodwaniaRocznika(this))
+            {
+                karta.ShowDialog();
+            }
+        }
+        private void removeYearButton_Click(object sender, EventArgs e)
+        {
+            if (yearsGridView.SelectedCells.Count == 0 || yearsGridView.CurrentCell.RowIndex > yearsGridView.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
+            }
+            else if (yearsGridView.SelectedCells.Count > 1 && yearsGridView.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
+            }
+            else
+            {
+                string id = yearsGridView.Rows[yearsGridView.CurrentCell.RowIndex].Cells[0].Value.ToString();
+
+                DialogResult result = MessageBox.Show("Czy aby na pewno chcesz usunąć ten element?", "Potwierdź usunięcie.", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    msql.DeleteYear(id);
+                    RefreshYearsTmp();
+                }
+                else
+                {
+                    return;
+                }
+
+            }
+        }
+        private void editYearButton_Click(object sender, EventArgs e)
+        {
+            if (yearsGridView.SelectedCells.Count == 0 || yearsGridView.CurrentCell.RowIndex > yearsGridView.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
+            }
+            else if (yearsGridView.SelectedCells.Count > 1 && yearsGridView.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
+            }
+            else
+            {
+                string[] dane = new string[yearsGridView.ColumnCount];
+                for (int i = 0; i < yearsGridView.ColumnCount; i++)
+                {
+                    dane[i] = yearsGridView.Rows[yearsGridView.CurrentCell.RowIndex].Cells[i].Value.ToString();
+                }
+
+                using (OknoDodwaniaRocznika karta = new OknoDodwaniaRocznika(this, dane[0], dane[1], dane[2], dane[3]))
+                {
+                    karta.ShowDialog();
+                }
+            }
+        }
+        public List<string>[] getListFromYears()
+            {
+            List <string>[] lista = new List<string>[2];
+
+            lista[0] = new List<string>();
+            lista[1] = new List<string>();
+            if (yearsGridView.RowCount > 0)
+            {
+                for (int i = 0; i < yearsGridView.RowCount; i++)
+                {
+                    if (lista[0].Contains(yearsGridView.Rows[i].Cells[2].Value.ToString()) == false)
+                    {
+                        lista[0].Add(yearsGridView.Rows[i].Cells[2].Value.ToString());
+                    }
+                    if (lista[1].Contains(yearsGridView.Rows[i].Cells[3].Value.ToString()) == false)
+                    {
+                        lista[1].Add(yearsGridView.Rows[i].Cells[3].Value.ToString());
+                    }
+                }
+            }
+            
+            return lista;
+            }
         //karta logu
         private void RefreshLog_Click(object sender, EventArgs e)
         {
@@ -328,26 +444,41 @@ namespace Klient
                             "aplikacji prosze słać na maila:\n" +
                             "michal.parus@gmail.com");
         }
-
         private void AdminTabPageBox_Selected(object sender, TabControlEventArgs e)
         {
             switch (AdminTabPageBox.SelectedIndex)
             {
+                //tylko kiedy jest pusta
                 case 0:
-                    RefreshUsersTmp();
+                    if (usersGrid.RowCount == 0)
+                    {
+                        RefreshUsersTmp();
+                        RefreshYearsTmp();
+                    }
                     break;
                 case 1:
-                    RefreshLogTmp();
+                    if (LogGrid.RowCount == 0)
+                    {
+                        RefreshLogTmp();
+                    }
                     break;
                 case 2:
-                    RefreshSubjectsListTmp();
+                    if (SubjectsListGrid.RowCount == 0)
+                    {
+                        RefreshSubjectsListTmp();
+                    }
                     break;
                 case 3:
-                    RefreshTeachersTmp();
+                    if (TeachersGrid.RowCount == 0)
+                    {
+                        RefreshTeachersTmp();
+                    }
                     break;
                 default:
                     break;
             }
         }
+
+        
     }
 }
