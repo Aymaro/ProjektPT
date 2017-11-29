@@ -43,6 +43,7 @@
             this.RefreshLog = new System.Windows.Forms.Button();
             this.AdminTabPageBox = new System.Windows.Forms.TabControl();
             this.ListaStudentowTabPage = new System.Windows.Forms.TabPage();
+            this.checkYearsTables = new System.Windows.Forms.Button();
             this.editYearButton = new System.Windows.Forms.Button();
             this.removeYearButton = new System.Windows.Forms.Button();
             this.addYearButton = new System.Windows.Forms.Button();
@@ -218,6 +219,7 @@
             // 
             // ListaStudentowTabPage
             // 
+            this.ListaStudentowTabPage.Controls.Add(this.checkYearsTables);
             this.ListaStudentowTabPage.Controls.Add(this.editYearButton);
             this.ListaStudentowTabPage.Controls.Add(this.removeYearButton);
             this.ListaStudentowTabPage.Controls.Add(this.addYearButton);
@@ -235,6 +237,16 @@
             this.ListaStudentowTabPage.TabIndex = 0;
             this.ListaStudentowTabPage.Text = "Studenci";
             this.ListaStudentowTabPage.UseVisualStyleBackColor = true;
+            // 
+            // checkYearsTables
+            // 
+            this.checkYearsTables.Location = new System.Drawing.Point(761, 6);
+            this.checkYearsTables.Name = "checkYearsTables";
+            this.checkYearsTables.Size = new System.Drawing.Size(95, 23);
+            this.checkYearsTables.TabIndex = 11;
+            this.checkYearsTables.Text = "Sprawdź tabele";
+            this.checkYearsTables.UseVisualStyleBackColor = true;
+            this.checkYearsTables.Click += new System.EventHandler(this.checkYearsTables_Click);
             // 
             // editYearButton
             // 
@@ -645,6 +657,7 @@
         private System.Windows.Forms.Button editYearButton;
         private System.Windows.Forms.Button removeYearButton;
         private System.Windows.Forms.Button addYearButton;
+        private System.Windows.Forms.Button checkYearsTables;
     }
 }
 

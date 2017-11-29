@@ -14,8 +14,6 @@ namespace Klient
         {
             InitializeComponent();
             addRegister();
-            
-
             readLoginFromRegister();
             
         }

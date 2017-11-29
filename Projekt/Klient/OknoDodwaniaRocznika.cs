@@ -65,6 +65,9 @@ namespace Klient
                 else
                 {//dodajemy nowy
                     OA.msql.InsertYear(rokTextBox.Text, wydzialComboBox.Text, kierunekComboBox.Text);
+                    //todo zakladamy nowa tabele
+                    string name = "r_" + rokTextBox.Text + "_" + wydzialComboBox.Text.Substring(0,4).ToLower() + "_" + kierunekComboBox.Text.Substring(0,4).ToLower();
+                    OA.msql.CreateYearTable(name);
                     Close();
                 }
             }

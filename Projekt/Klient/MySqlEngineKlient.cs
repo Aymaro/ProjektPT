@@ -76,7 +76,6 @@ namespace Klient
                 return false;
             }
         }
-
         //lista studentow
         public List<string>[] SelectStudentList()
         {
@@ -304,6 +303,26 @@ namespace Klient
         {
 
             string query = String.Format("Delete FROM roczniki WHERE ID= '{0}'", ID);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        public void CreateYearTable(string name)
+        {
+
+            string query = String.Format("CREATE TABLE `aymaropl_pt`.`{0}` " +
+                "(`UID` TEXT NOT NULL)" +
+                "ENGINE = InnoDB; ", name);
 
             //open connection
             if (this.OpenConnection() == true)

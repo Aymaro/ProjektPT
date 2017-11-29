@@ -246,6 +246,33 @@ namespace Klient
             
             return lista;
             }
+        private void checkYearsTables_Click(object sender, EventArgs e)
+        {
+            List<string>[] Lista = new List<string>[5];
+            Lista = msql.SelectYearsList();
+            int yearsCount = Lista[0].Count;
+            int added = 0;
+            int exist = 0;
+            for (int i = 0; i < Lista[0].Count; i++)
+            {
+                string name = "r_" + Lista[1][i].ToLower() + "_" + Lista[2][i].Substring(0,4).ToLower() + "_" + Lista[3][i].Substring(0, 4).ToLower();
+                if (msql.CheckIfExist(name) == false)
+                {//nie ma takiej tabeli i ja tworzymy
+                    added++;
+                    msql.CreateYearTable(name);
+                }
+                else
+                {
+                    exist++;
+                    continue;
+                }
+            }
+            MessageBox.Show(String.Format("Liczba wykładowców: {0}\n" +
+                                            "Liczba utworzonych nowych tabel: {1}\n" +
+                                            "Liczba istniejących tabel: {2}",
+                                            yearsCount, added, exist),
+                                            "Rezultat", MessageBoxButtons.OK);
+        }
         //karta logu
         private void RefreshLog_Click(object sender, EventArgs e)
         {
