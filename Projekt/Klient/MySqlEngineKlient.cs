@@ -79,13 +79,16 @@ namespace Klient
         //lista studentow
         public List<string>[] SelectStudentList()
         {
-            string query = "SELECT UID, Imie, Nazwisko FROM studenci";
+            string query = "SELECT UID, Imie, Nazwisko, Rok, Wydzial, Kierunek FROM studenci";
 
             //Create a list to store the result
-            List<string>[] list = new List<string>[3];
+            List<string>[] list = new List<string>[6];
             list[0] = new List<string>();
             list[1] = new List<string>();
             list[2] = new List<string>();
+            list[3] = new List<string>();
+            list[4] = new List<string>();
+            list[5] = new List<string>();
 
             //Open connection
             if (this.OpenConnection() == true)
@@ -101,6 +104,9 @@ namespace Klient
                     list[0].Add(dataReader["UID"] + "");
                     list[1].Add(dataReader["Imie"] + "");
                     list[2].Add(dataReader["Nazwisko"] + "");
+                    list[3].Add(dataReader["Rok"] + "");
+                    list[4].Add(dataReader["Wydzial"] + "");
+                    list[5].Add(dataReader["Kierunek"] + "");
                 }
 
                 //close Data Reader
@@ -117,7 +123,7 @@ namespace Klient
                 return list;
             }
         }
-        public void InsertUser(string UID, string Imie, string Nazwisko)
+        public void InsertStudent(string UID, string Imie, string Nazwisko)
         {
             if (Imie == "")
                 Imie = "Unknown";
@@ -139,7 +145,7 @@ namespace Klient
                 this.CloseConnection();
             }
         }
-        public void UptadeUser(string UID, string Imie, string Nazwisko)
+        public void UptadeStudent(string UID, string Imie, string Nazwisko)
         {
             if (Imie == "")
                 Imie = "Unknown";
@@ -162,7 +168,7 @@ namespace Klient
                 this.CloseConnection();
             }
         }
-        public void UptadeUserWUID(string UID, string Imie, string Nazwisko, string wUID)
+        public void UptadeStudentWUID(string UID, string Imie, string Nazwisko, string wUID)
         {
             if (Imie == "")
                 Imie = "Unknown";
@@ -185,10 +191,28 @@ namespace Klient
                 this.CloseConnection();
             }
         }
-        public void DeleteUser(string UID)
+        public void DeleteStudent(string UID)
         {
 
             string query = String.Format("Delete FROM studenci WHERE UID= '{0}'", UID);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        public void UptadeStudentYear(string UID, string Rok, string Wydzial, string Kierunek)
+        {
+            
+            string query = String.Format("UPDATE studenci SET Rok='{0}', Wydzial='{1}', Kierunek='{2}' WHERE UID='{3}'", Rok, Wydzial, Kierunek, UID);
 
             //open connection
             if (this.OpenConnection() == true)
@@ -336,6 +360,47 @@ namespace Klient
                 //close connection
                 this.CloseConnection();
             }
+        }
+        public void countStudents()
+        {
+            List<string>[] Lista = new List<string>[5];
+            
+            Lista = SelectYearsList();
+
+            if (this.OpenConnection() == true)
+            {
+                for (int i = 0; i < Lista[0].Count; i++)
+                {
+
+                    string query = String.Format("SELECT COUNT(*) FROM studenci WHERE rok = '{0}' and wydzial = '{1}' and kierunek = '{2}'", Lista[1][i], Lista[2][i], Lista[3][i]);
+                    //Create Command
+                    MySqlCommand cmd = new MySqlCommand(query, connection);
+                    //Create a data reader and Execute the command
+                    MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                    //Read the data and store them in the list
+                    while (dataReader.Read())
+                    {
+                        Lista[4][i] = dataReader.GetString("COUNT(*)");
+                    }
+                    dataReader.Close();
+
+                    query = String.Format("UPDATE roczniki Set liczba='{3}' WHERE rok = '{0}' and wydzial = '{1}' and kierunek = '{2}'", Lista[1][i], Lista[2][i], Lista[3][i], Lista[4][i]);
+                    cmd = new MySqlCommand(query, connection);
+                    cmd.ExecuteNonQuery();
+
+                    //close Data Reader
+                    
+
+                }
+                
+
+                //close Connection
+                this.CloseConnection();
+
+
+            }
+            
         }
         //log
         public List<string>[] SelectLog()

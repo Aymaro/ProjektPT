@@ -17,6 +17,10 @@ namespace Klient
         Thread RefreshSubjectsListThread;
         Thread RefreshTeachersListThread;
 
+        //tablice z danymi
+        List<string>[] Lista_studentow = new List<string>[4];
+        List<string>[] Lista_studentow_zmiany = new List<string>[2];
+
 
         //Konstruktory
         public OknoAdmina()
@@ -49,14 +53,13 @@ namespace Klient
         private void RefreshUsersThreadDoWork()
 
         {
-            List<string>[] Lista = new List<string>[3];
-            Lista = msql.SelectStudentList();
+            Lista_studentow = msql.SelectStudentList();
             usersGrid.Invoke(new Action(delegate ()
             {
                 usersGrid.Rows.Clear();
-                for (int i = 0; i < Lista[0].Count; i++)
+                for (int i = 0; i < Lista_studentow[0].Count; i++)
                 {
-                    usersGrid.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i]);
+                    usersGrid.Rows.Add(Lista_studentow[0][i], Lista_studentow[1][i], Lista_studentow[2][i], Lista_studentow[3][i], Lista_studentow[4][i], Lista_studentow[5][i]);
                 }
             }));
 
@@ -91,7 +94,7 @@ namespace Klient
 
                 if (result == DialogResult.Yes)
                 {
-                    msql.DeleteUser(UID);
+                    msql.DeleteStudent(UID);
                     RefreshUsersTmp();
                 }
                 else
@@ -107,7 +110,41 @@ namespace Klient
         }
         private void usersGrid_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            EditUserTmp();
+            addUserToYear();
+        }
+        private void addUserToYear()
+        {
+            if (yearsGridView.SelectedCells.Count == 0 || yearsGridView.CurrentCell.RowIndex > yearsGridView.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jeden rocznik z listy po prawo!", "Błąd", MessageBoxButtons.OK);
+                if (usersGrid.SelectedCells.Count == 0 || usersGrid.CurrentCell.RowIndex > usersGrid.Rows.Count)
+                {
+                    MessageBox.Show("Musisz zaznaczyć chociaż jednego studenta z listy!", "Błąd", MessageBoxButtons.OK);
+                }
+            }
+            if (yearsGridView.SelectedCells.Count > 1 && yearsGridView.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jeden rocznik pozycję.", "Błąd", MessageBoxButtons.OK);
+                if (usersGrid.SelectedCells.Count > 1 && usersGrid.SelectedRows.Count != 1)
+                {
+                    MessageBox.Show("Proszę zaznaczyć tylko jednego studenta z listy.", "Błąd", MessageBoxButtons.OK);
+                }
+            }
+            else
+            {
+                string[] dane = new string[4];
+                dane[0] = usersGrid.Rows[usersGrid.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                for (int i = 1; i < 4; i++)
+                {
+                    dane[i] = yearsGridView.Rows[yearsGridView.CurrentCell.RowIndex].Cells[i].Value.ToString();
+                }
+
+                msql.UptadeStudentYear(dane[0], dane[1], dane[2], dane[3]);
+                RefreshUsersTmp();
+                //msql.countStudents();
+            }
+            //juz nie edytujemy zaznaczonego elementu
+            //EditUserTmp();
         }
         private void EditUserTmp()
         {
@@ -133,16 +170,20 @@ namespace Klient
                 }
             }
         }
+        
         //roczniki
         private void yearsRefreshButton_Click(object sender, EventArgs e)
         {
+            msql.countStudents();
             RefreshYearsTmp();
+
         }
         public void RefreshYearsTmp()
         {
             RefreshYearsListThread = new Thread(RefreshYearsThreadDoWork);
             RefreshYearsListThread.Start();
             yearsRefreshButton.Enabled = false;
+            
         }
         private void RefreshYearsThreadDoWork()
 
@@ -201,6 +242,7 @@ namespace Klient
         }
         private void editYearButton_Click(object sender, EventArgs e)
         {
+            //todo nie dziala
             if (yearsGridView.SelectedCells.Count == 0 || yearsGridView.CurrentCell.RowIndex > yearsGridView.Rows.Count)
             {
                 MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
@@ -369,7 +411,7 @@ namespace Klient
         private void AddTeacher_Click(object sender, EventArgs e)
         {
             using (OknoDodawania karta = new OknoDodawania(this,"w"))
-            {
+            {//todo sprawdzanie hasla
                 karta.ShowDialog();
             }
 
@@ -480,7 +522,8 @@ namespace Klient
                     if (usersGrid.RowCount == 0)
                     {
                         RefreshUsersTmp();
-                        RefreshYearsTmp();
+
+                        //RefreshYearsTmp();
                     }
                     break;
                 case 1:
@@ -506,6 +549,15 @@ namespace Klient
             }
         }
 
-        
+        private void yearsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //todo kliknieto jakas komorkie. pokazujemy jakich ma studentow dany rocznik
+            //kolorujemy tabele polewej. zielony ze student jest, czerwony jak usuwamy, niebieski jak dodajemy
+        }
+
+        private void yearsGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            addUserToYear();
+        }
     }
 }

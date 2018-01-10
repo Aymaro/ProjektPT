@@ -30,9 +30,6 @@
         {
             this.RefreshUsers = new System.Windows.Forms.Button();
             this.usersGrid = new System.Windows.Forms.DataGridView();
-            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Imie = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Nazwisko = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.LogGrid = new System.Windows.Forms.DataGridView();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Data = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -79,6 +76,12 @@
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wylogujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.UID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Imie = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Nazwisko = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Rok_s = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.wydzial_s = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.kierunek_s = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).BeginInit();
             this.AdminTabPageBox.SuspendLayout();
@@ -110,31 +113,16 @@
             this.usersGrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.UID,
             this.Imie,
-            this.Nazwisko});
+            this.Nazwisko,
+            this.Rok_s,
+            this.wydzial_s,
+            this.kierunek_s});
             this.usersGrid.Location = new System.Drawing.Point(6, 35);
             this.usersGrid.Name = "usersGrid";
             this.usersGrid.ReadOnly = true;
-            this.usersGrid.Size = new System.Drawing.Size(346, 270);
+            this.usersGrid.Size = new System.Drawing.Size(649, 362);
             this.usersGrid.TabIndex = 1;
             this.usersGrid.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.usersGrid_CellDoubleClick);
-            // 
-            // UID
-            // 
-            this.UID.HeaderText = "UID";
-            this.UID.Name = "UID";
-            this.UID.ReadOnly = true;
-            // 
-            // Imie
-            // 
-            this.Imie.HeaderText = "Imie";
-            this.Imie.Name = "Imie";
-            this.Imie.ReadOnly = true;
-            // 
-            // Nazwisko
-            // 
-            this.Nazwisko.HeaderText = "Nazwisko";
-            this.Nazwisko.Name = "Nazwisko";
-            this.Nazwisko.ReadOnly = true;
             // 
             // LogGrid
             // 
@@ -150,10 +138,10 @@
             this.dataGridViewTextBoxColumn2,
             this.dataGridViewTextBoxColumn3});
             this.LogGrid.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.LogGrid.Location = new System.Drawing.Point(3, 38);
+            this.LogGrid.Location = new System.Drawing.Point(3, 35);
             this.LogGrid.Name = "LogGrid";
             this.LogGrid.ReadOnly = true;
-            this.LogGrid.Size = new System.Drawing.Size(867, 270);
+            this.LogGrid.Size = new System.Drawing.Size(1100, 365);
             this.LogGrid.TabIndex = 2;
             // 
             // ID
@@ -213,7 +201,7 @@
             this.AdminTabPageBox.Location = new System.Drawing.Point(12, 27);
             this.AdminTabPageBox.Name = "AdminTabPageBox";
             this.AdminTabPageBox.SelectedIndex = 0;
-            this.AdminTabPageBox.Size = new System.Drawing.Size(881, 337);
+            this.AdminTabPageBox.Size = new System.Drawing.Size(1114, 429);
             this.AdminTabPageBox.TabIndex = 4;
             this.AdminTabPageBox.Selected += new System.Windows.Forms.TabControlEventHandler(this.AdminTabPageBox_Selected);
             // 
@@ -233,24 +221,25 @@
             this.ListaStudentowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaStudentowTabPage.Name = "ListaStudentowTabPage";
             this.ListaStudentowTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ListaStudentowTabPage.Size = new System.Drawing.Size(873, 311);
+            this.ListaStudentowTabPage.Size = new System.Drawing.Size(1106, 403);
             this.ListaStudentowTabPage.TabIndex = 0;
             this.ListaStudentowTabPage.Text = "Studenci";
             this.ListaStudentowTabPage.UseVisualStyleBackColor = true;
             // 
             // checkYearsTables
             // 
-            this.checkYearsTables.Location = new System.Drawing.Point(761, 6);
+            this.checkYearsTables.Location = new System.Drawing.Point(994, 6);
             this.checkYearsTables.Name = "checkYearsTables";
             this.checkYearsTables.Size = new System.Drawing.Size(95, 23);
             this.checkYearsTables.TabIndex = 11;
             this.checkYearsTables.Text = "Sprawdź tabele";
             this.checkYearsTables.UseVisualStyleBackColor = true;
+            this.checkYearsTables.Visible = false;
             this.checkYearsTables.Click += new System.EventHandler(this.checkYearsTables_Click);
             // 
             // editYearButton
             // 
-            this.editYearButton.Location = new System.Drawing.Point(680, 6);
+            this.editYearButton.Location = new System.Drawing.Point(913, 6);
             this.editYearButton.Name = "editYearButton";
             this.editYearButton.Size = new System.Drawing.Size(75, 23);
             this.editYearButton.TabIndex = 9;
@@ -260,7 +249,7 @@
             // 
             // removeYearButton
             // 
-            this.removeYearButton.Location = new System.Drawing.Point(599, 6);
+            this.removeYearButton.Location = new System.Drawing.Point(832, 6);
             this.removeYearButton.Name = "removeYearButton";
             this.removeYearButton.Size = new System.Drawing.Size(75, 23);
             this.removeYearButton.TabIndex = 8;
@@ -270,7 +259,7 @@
             // 
             // addYearButton
             // 
-            this.addYearButton.Location = new System.Drawing.Point(514, 6);
+            this.addYearButton.Location = new System.Drawing.Point(747, 6);
             this.addYearButton.Name = "addYearButton";
             this.addYearButton.Size = new System.Drawing.Size(79, 23);
             this.addYearButton.TabIndex = 7;
@@ -280,7 +269,7 @@
             // 
             // yearsRefreshButton
             // 
-            this.yearsRefreshButton.Location = new System.Drawing.Point(428, 6);
+            this.yearsRefreshButton.Location = new System.Drawing.Point(661, 6);
             this.yearsRefreshButton.Name = "yearsRefreshButton";
             this.yearsRefreshButton.Size = new System.Drawing.Size(80, 23);
             this.yearsRefreshButton.TabIndex = 6;
@@ -299,11 +288,13 @@
             this.wydzial,
             this.Kierunek,
             this.Column1});
-            this.yearsGridView.Location = new System.Drawing.Point(428, 35);
+            this.yearsGridView.Location = new System.Drawing.Point(661, 35);
             this.yearsGridView.Name = "yearsGridView";
             this.yearsGridView.ReadOnly = true;
-            this.yearsGridView.Size = new System.Drawing.Size(439, 270);
+            this.yearsGridView.Size = new System.Drawing.Size(439, 362);
             this.yearsGridView.TabIndex = 5;
+            this.yearsGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.yearsGridView_CellClick);
+            this.yearsGridView.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.yearsGridView_CellDoubleClick);
             // 
             // dataGridViewTextBoxColumn9
             // 
@@ -377,7 +368,7 @@
             this.LogTabPage.Location = new System.Drawing.Point(4, 22);
             this.LogTabPage.Name = "LogTabPage";
             this.LogTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.LogTabPage.Size = new System.Drawing.Size(873, 311);
+            this.LogTabPage.Size = new System.Drawing.Size(1106, 403);
             this.LogTabPage.TabIndex = 1;
             this.LogTabPage.Text = "Log";
             this.LogTabPage.UseVisualStyleBackColor = true;
@@ -389,7 +380,7 @@
             this.ListaPrzedmiotowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaPrzedmiotowTabPage.Name = "ListaPrzedmiotowTabPage";
             this.ListaPrzedmiotowTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ListaPrzedmiotowTabPage.Size = new System.Drawing.Size(873, 311);
+            this.ListaPrzedmiotowTabPage.Size = new System.Drawing.Size(1106, 403);
             this.ListaPrzedmiotowTabPage.TabIndex = 2;
             this.ListaPrzedmiotowTabPage.Text = "Lista przedmiotów";
             this.ListaPrzedmiotowTabPage.UseVisualStyleBackColor = true;
@@ -415,7 +406,7 @@
             this.SubjectsListGrid.Location = new System.Drawing.Point(6, 35);
             this.SubjectsListGrid.Name = "SubjectsListGrid";
             this.SubjectsListGrid.ReadOnly = true;
-            this.SubjectsListGrid.Size = new System.Drawing.Size(346, 256);
+            this.SubjectsListGrid.Size = new System.Drawing.Size(346, 362);
             this.SubjectsListGrid.TabIndex = 5;
             // 
             // dataGridViewTextBoxColumn4
@@ -441,7 +432,7 @@
             this.ListaWykladowcowTabPage.Controls.Add(this.TeachersGrid);
             this.ListaWykladowcowTabPage.Location = new System.Drawing.Point(4, 22);
             this.ListaWykladowcowTabPage.Name = "ListaWykladowcowTabPage";
-            this.ListaWykladowcowTabPage.Size = new System.Drawing.Size(873, 311);
+            this.ListaWykladowcowTabPage.Size = new System.Drawing.Size(1106, 403);
             this.ListaWykladowcowTabPage.TabIndex = 3;
             this.ListaWykladowcowTabPage.Text = "Lista wykładowców";
             this.ListaWykladowcowTabPage.UseVisualStyleBackColor = true;
@@ -454,6 +445,7 @@
             this.CheckTables.TabIndex = 10;
             this.CheckTables.Text = "Sprawdź tabele";
             this.CheckTables.UseVisualStyleBackColor = true;
+            this.CheckTables.Visible = false;
             this.CheckTables.Click += new System.EventHandler(this.CheckTables_Click);
             // 
             // EditTeacher
@@ -510,7 +502,7 @@
             this.TeachersGrid.Location = new System.Drawing.Point(6, 35);
             this.TeachersGrid.Name = "TeachersGrid";
             this.TeachersGrid.ReadOnly = true;
-            this.TeachersGrid.Size = new System.Drawing.Size(449, 273);
+            this.TeachersGrid.Size = new System.Drawing.Size(449, 365);
             this.TeachersGrid.TabIndex = 6;
             // 
             // dataGridViewTextBoxColumn6
@@ -551,7 +543,7 @@
             this.wylogujToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(905, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1138, 24);
             this.menuStrip1.TabIndex = 5;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -577,11 +569,47 @@
             this.wylogujToolStripMenuItem.Text = "Wyloguj";
             this.wylogujToolStripMenuItem.Click += new System.EventHandler(this.wylogujToolStripMenuItem_Click);
             // 
+            // UID
+            // 
+            this.UID.HeaderText = "UID";
+            this.UID.Name = "UID";
+            this.UID.ReadOnly = true;
+            // 
+            // Imie
+            // 
+            this.Imie.HeaderText = "Imie";
+            this.Imie.Name = "Imie";
+            this.Imie.ReadOnly = true;
+            // 
+            // Nazwisko
+            // 
+            this.Nazwisko.HeaderText = "Nazwisko";
+            this.Nazwisko.Name = "Nazwisko";
+            this.Nazwisko.ReadOnly = true;
+            // 
+            // Rok_s
+            // 
+            this.Rok_s.HeaderText = "Rok";
+            this.Rok_s.Name = "Rok_s";
+            this.Rok_s.ReadOnly = true;
+            // 
+            // wydzial_s
+            // 
+            this.wydzial_s.HeaderText = "Wydzial";
+            this.wydzial_s.Name = "wydzial_s";
+            this.wydzial_s.ReadOnly = true;
+            // 
+            // kierunek_s
+            // 
+            this.kierunek_s.HeaderText = "Kierunek";
+            this.kierunek_s.Name = "kierunek_s";
+            this.kierunek_s.ReadOnly = true;
+            // 
             // OknoAdmina
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 376);
+            this.ClientSize = new System.Drawing.Size(1138, 468);
             this.Controls.Add(this.AdminTabPageBox);
             this.Controls.Add(this.menuStrip1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
@@ -609,9 +637,6 @@
 
         private System.Windows.Forms.Button RefreshUsers;
         private System.Windows.Forms.DataGridView usersGrid;
-        private System.Windows.Forms.DataGridViewTextBoxColumn UID;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Imie;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Nazwisko;
         private System.Windows.Forms.DataGridView LogGrid;
         private System.Windows.Forms.Button RefreshLog;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
@@ -658,6 +683,12 @@
         private System.Windows.Forms.Button removeYearButton;
         private System.Windows.Forms.Button addYearButton;
         private System.Windows.Forms.Button checkYearsTables;
+        private System.Windows.Forms.DataGridViewTextBoxColumn UID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Imie;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Nazwisko;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Rok_s;
+        private System.Windows.Forms.DataGridViewTextBoxColumn wydzial_s;
+        private System.Windows.Forms.DataGridViewTextBoxColumn kierunek_s;
     }
 }
 

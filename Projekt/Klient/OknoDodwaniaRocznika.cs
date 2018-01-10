@@ -34,6 +34,7 @@ namespace Klient
         }
         private void comboBoxAddElements()
         {
+            //todo blad
             List<string>[] lista = OA.getListFromYears();
             wydzialComboBox.Items.AddRange(lista[0].ToArray());
             kierunekComboBox.Items.AddRange(lista[1].ToArray());
@@ -65,9 +66,9 @@ namespace Klient
                 else
                 {//dodajemy nowy
                     OA.msql.InsertYear(rokTextBox.Text, wydzialComboBox.Text, kierunekComboBox.Text);
-                    //todo zakladamy nowa tabele
-                    string name = "r_" + rokTextBox.Text + "_" + wydzialComboBox.Text.Substring(0,4).ToLower() + "_" + kierunekComboBox.Text.Substring(0,4).ToLower();
-                    OA.msql.CreateYearTable(name);
+                    
+                    //string name = "r_" + rokTextBox.Text + "_" + wydzialComboBox.Text.Substring(0,4).ToLower() + "_" + kierunekComboBox.Text.Substring(0,4).ToLower();
+                    //OA.msql.CreateYearTable(name);
                     Close();
                 }
             }

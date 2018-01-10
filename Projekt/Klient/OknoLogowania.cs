@@ -94,7 +94,7 @@ namespace Klient
                     {
                         saveLoginToRegister("no");
                     }
-                    if (lista[0] == "1")
+                    if (lista[0] == "1" || lista[0] == "4")
                     {
                         //Zalogowal sie administrator
                         Hide();

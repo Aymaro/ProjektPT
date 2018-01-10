@@ -94,11 +94,11 @@ namespace Klient
                     {
                         if (UIDtextBox.Text == UID)
                         {
-                            OA.msql.UptadeUser(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text);
+                            OA.msql.UptadeStudent(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text);
                         }
                         else
                         {
-                            OA.msql.UptadeUserWUID(UID, ImieTextBox.Text, NazwiskoTextBox.Text, UIDtextBox.Text);
+                            OA.msql.UptadeStudentWUID(UID, ImieTextBox.Text, NazwiskoTextBox.Text, UIDtextBox.Text);
                         }
                         Close();
                     }
@@ -114,7 +114,7 @@ namespace Klient
                     }
                     else
                     {
-                        OA.msql.InsertUser(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text);
+                        OA.msql.InsertStudent(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text);
                         Close();
                     }
                 }
