@@ -22,8 +22,8 @@ namespace Klient
         public OknoDodwaniaRocznika(OknoAdmina _OA, string id, string rok, string wydzial, string kierunek)
         {
             InitializeComponent();
-            comboBoxAddElements();
             OA = _OA;
+            comboBoxAddElements();
             editCheckBox.Checked = true;
             editCheckBox.Enabled = false;
             idTextBox.Text = id;
@@ -34,7 +34,6 @@ namespace Klient
         }
         private void comboBoxAddElements()
         {
-            //todo blad
             List<string>[] lista = OA.getListFromYears();
             wydzialComboBox.Items.AddRange(lista[0].ToArray());
             kierunekComboBox.Items.AddRange(lista[1].ToArray());

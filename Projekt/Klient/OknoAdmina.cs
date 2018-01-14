@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Windows.Forms;
+using System.Drawing;
 
 namespace Klient
 {
@@ -66,7 +67,9 @@ namespace Klient
             RefreshUsers.Invoke(new Action(delegate ()
             {
                 RefreshUsers.Enabled = true;
+                colourStudents();
             }));
+            
 
         }
         private void AddUser_Click(object sender, EventArgs e)
@@ -170,7 +173,6 @@ namespace Klient
                 }
             }
         }
-        
         //roczniki
         private void yearsRefreshButton_Click(object sender, EventArgs e)
         {
@@ -242,7 +244,6 @@ namespace Klient
         }
         private void editYearButton_Click(object sender, EventArgs e)
         {
-            //todo nie dziala
             if (yearsGridView.SelectedCells.Count == 0 || yearsGridView.CurrentCell.RowIndex > yearsGridView.Rows.Count)
             {
                 MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
@@ -315,6 +316,58 @@ namespace Klient
                                             yearsCount, added, exist),
                                             "Rezultat", MessageBoxButtons.OK);
         }
+        private void yearsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            colourStudents();
+        }
+        private void yearsGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            addUserToYear();
+        }
+        private void colourStudents()
+        {
+            if (usersGrid.Rows.Count == 0 || yearsGridView.Rows.Count == 0)
+            {// jezeli lista studentow jest pusta to nic nie robimy bo po co.
+                return;
+            }
+            else
+            {
+                string[] dane = new string[yearsGridView.ColumnCount];
+                for (int i = 0; i < yearsGridView.ColumnCount; i++)
+                {
+                    dane[i] = yearsGridView.Rows[yearsGridView.CurrentCell.RowIndex].Cells[i].Value.ToString();
+                }
+                for (int i = 0; i < usersGrid.Rows.Count; i++)
+                {
+                    if (usersGrid.Rows[i].Cells[3].Value.ToString() == dane[1])
+                    {
+                        if (usersGrid.Rows[i].Cells[4].Value.ToString() == dane[2])
+                        {
+                            if (usersGrid.Rows[i].Cells[5].Value.ToString() == dane[3])
+                            {
+                                usersGrid.Rows[i].DefaultCellStyle.BackColor = Color.LightGreen;
+                                continue;
+                            }
+                            else
+                            {
+                                usersGrid.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                                continue;
+                            }
+                        }
+                        else
+                        {
+                            usersGrid.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        usersGrid.Rows[i].DefaultCellStyle.BackColor = Color.White;
+                        continue;
+                    }
+                }
+            }
+        }
         //karta logu
         private void RefreshLog_Click(object sender, EventArgs e)
         {
@@ -329,7 +382,7 @@ namespace Klient
         private void RefreshLogThreadDoWork()
         {
             List<string>[] Lista = new List<string>[6];
-            Lista = msql.SelectLog();
+            Lista = msql.SelectLog(Convert.ToInt32(numericUpDown1.Value));
 
             LogGrid.Invoke(new Action(delegate ()
             {
@@ -495,6 +548,43 @@ namespace Klient
                                             TeachersCount, added, exist),
                                             "Rezultat", MessageBoxButtons.OK);
         }
+        private void TeachersGrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            //pokazujemy jakie ten wylkadowca ma przedmioty
+            string id = TeachersGrid.Rows[TeachersGrid.CurrentCell.RowIndex].Cells[0].Value.ToString();
+            List<string>[] Lista = new List<string>[4];
+            Lista = msql.SelectTeachersSubjects(id);
+
+            teachersSubjectsGridView.Rows.Clear();
+            for (int i = 0; i < Lista[0].Count; i++)
+            {
+                teachersSubjectsGridView.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i], Lista[3][i]);
+            }
+        }
+        private void addTeacherLessonToList_Click(object sender, EventArgs e)
+        {
+            if (TeachersGrid.SelectedCells.Count == 0 || TeachersGrid.CurrentCell.RowIndex > TeachersGrid.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jednego wykładowcę z listu po lewo!", "Błąd", MessageBoxButtons.OK);
+            }
+            else if (TeachersGrid.SelectedCells.Count > 1 && TeachersGrid.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jednego wykładowcę.", "Błąd", MessageBoxButtons.OK);
+            }
+            else
+            {
+                string[] dane = new string[3];
+                for (int i = 0; i < 3; i++)
+                {
+                    dane[i] = TeachersGrid.Rows[TeachersGrid.CurrentCell.RowIndex].Cells[i].Value.ToString();
+                }
+                
+                using (OknoDodawaniaPrzedmiotow karta = new OknoDodawaniaPrzedmiotow(this, dane))
+                {
+                    karta.ShowDialog();
+                }
+            }
+        }
         //gorna listwa menu
         private void wylogujToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -549,15 +639,6 @@ namespace Klient
             }
         }
 
-        private void yearsGridView_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            //todo kliknieto jakas komorkie. pokazujemy jakich ma studentow dany rocznik
-            //kolorujemy tabele polewej. zielony ze student jest, czerwony jak usuwamy, niebieski jak dodajemy
-        }
-
-        private void yearsGridView_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            addUserToYear();
-        }
+        
     }
 }
