@@ -170,5 +170,25 @@ namespace Klient
                 return list;
             }
         }
+        public void checkInStudent(string UID, string fulldate, string hour,string date)
+        {
+
+            
+            
+            string query = String.Format("update obecnosc o set o.data = '{0}' where o.id = (select o.id from zajecia z where o.data='' and z.id = o.wyklad and o.uid = '{1}' and z.data='{2}' and z.poczatek < '{3}' and z.koniec > '{3}')", fulldate, UID, date, hour);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
     }
 }

@@ -51,5 +51,37 @@ namespace Klient
         {
             Close();
         }
+
+        private void addButton_Click(object sender, EventArgs e)
+        {
+            if (yearsComboBox.Text == "" || subjectsComboBox.Text == "")
+            {
+                MessageBox.Show("Nie można zostawić pustych okienek wyboru roku i przedmiotu!", "Błąd", MessageBoxButtons.OK);
+                return;
+            }
+            else
+            {
+                OA.msql.InsertSubjectToTeacher(dane[0], stringChecker(yearsComboBox.Text), subjectsComboBox.Text);
+                Close();
+            }
+        }
+        private string stringChecker(string input)
+        {
+            string result = null;
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                if (input[i] != '/')
+                {
+                    result += input[i];
+                }
+                else
+                {
+                    return result;
+                }
+            }
+
+            return result;
+        }
     }
 }

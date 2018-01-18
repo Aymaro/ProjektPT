@@ -18,17 +18,26 @@ namespace Klient
         {
             HostPort = _HostPort;
         }
-        private string DateNow()
+        private string fullDateNow()
+        {
+            string Data = null;
+            return Data += dateNow()+ " " + hourNow();
+        }
+        private string dateNow()
         {
             string Data = null;
             return Data += DateTime.Now.Year +
                             "-" + DateTime.Now.Month +
-                            "-" + DateTime.Now.Day +
-                            " " + DateTime.Now.Hour +
+                            "-" + DateTime.Now.Day;
+        }
+        private string hourNow()
+        {
+            string hour = null;
+            return hour +=  DateTime.Now.Hour +
                             ":" + DateTime.Now.Minute +
                             ":" + DateTime.Now.Second;
         }
-        
+
 
 
         public void Listen()
@@ -97,8 +106,8 @@ namespace Klient
                         }
 
                         
-                        msql.Insert(RDR ,UID, DateNow());
-
+                        msql.Insert(RDR ,UID, fullDateNow());
+                        msql.checkInStudent(UID, fullDateNow(), hourNow(), dateNow());
                     }
                     client.Close();
                 }

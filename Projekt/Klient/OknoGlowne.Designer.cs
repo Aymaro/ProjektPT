@@ -34,6 +34,10 @@
             this.monthCalendar1 = new System.Windows.Forms.MonthCalendar();
             this.label1 = new System.Windows.Forms.Label();
             this.subjectGridView = new System.Windows.Forms.DataGridView();
+            this.studentsGridView = new System.Windows.Forms.DataGridView();
+            this.addLesson = new System.Windows.Forms.Button();
+            this.deleteLesson = new System.Windows.Forms.Button();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.subjectSubjects = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.startSubjects = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.endSubject = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -43,12 +47,11 @@
             this.yearSub = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.wSub = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kSub = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.studentsGridView = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.uidStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.surnameStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.dateStudent = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addLesson = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.subjectGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.studentsGridView)).BeginInit();
@@ -70,6 +73,7 @@
             this.odświeżToolStripMenuItem.Name = "odświeżToolStripMenuItem";
             this.odświeżToolStripMenuItem.Size = new System.Drawing.Size(63, 20);
             this.odświeżToolStripMenuItem.Text = "Odśwież";
+            this.odświeżToolStripMenuItem.Click += new System.EventHandler(this.odświeżToolStripMenuItem_Click);
             // 
             // wylogujToolStripMenuItem
             // 
@@ -104,6 +108,7 @@
             this.subjectGridView.AllowUserToDeleteRows = false;
             this.subjectGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.subjectGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.id,
             this.subjectSubjects,
             this.startSubjects,
             this.endSubject,
@@ -115,8 +120,54 @@
             this.kSub});
             this.subjectGridView.Location = new System.Drawing.Point(299, 62);
             this.subjectGridView.Name = "subjectGridView";
+            this.subjectGridView.ReadOnly = true;
             this.subjectGridView.Size = new System.Drawing.Size(347, 282);
             this.subjectGridView.TabIndex = 4;
+            this.subjectGridView.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.subjectGridView_CellClick);
+            // 
+            // studentsGridView
+            // 
+            this.studentsGridView.AllowUserToAddRows = false;
+            this.studentsGridView.AllowUserToDeleteRows = false;
+            this.studentsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.studentsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column1,
+            this.uidStudent,
+            this.nameStudent,
+            this.surnameStudent,
+            this.dateStudent});
+            this.studentsGridView.Location = new System.Drawing.Point(652, 62);
+            this.studentsGridView.Name = "studentsGridView";
+            this.studentsGridView.ReadOnly = true;
+            this.studentsGridView.Size = new System.Drawing.Size(457, 282);
+            this.studentsGridView.TabIndex = 5;
+            this.studentsGridView.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.studentsGridView_CellContentDoubleClick);
+            // 
+            // addLesson
+            // 
+            this.addLesson.Location = new System.Drawing.Point(299, 33);
+            this.addLesson.Name = "addLesson";
+            this.addLesson.Size = new System.Drawing.Size(83, 23);
+            this.addLesson.TabIndex = 6;
+            this.addLesson.Text = "Dodaj wykład";
+            this.addLesson.UseVisualStyleBackColor = true;
+            this.addLesson.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // deleteLesson
+            // 
+            this.deleteLesson.Location = new System.Drawing.Point(388, 33);
+            this.deleteLesson.Name = "deleteLesson";
+            this.deleteLesson.Size = new System.Drawing.Size(83, 23);
+            this.deleteLesson.TabIndex = 7;
+            this.deleteLesson.Text = "Usuń wykład";
+            this.deleteLesson.UseVisualStyleBackColor = true;
+            this.deleteLesson.Click += new System.EventHandler(this.deleteLesson_Click);
+            // 
+            // id
+            // 
+            this.id.HeaderText = "id";
+            this.id.Name = "id";
+            this.id.Visible = false;
             // 
             // subjectSubjects
             // 
@@ -139,18 +190,21 @@
             // 
             this.presentSubject.HeaderText = "O";
             this.presentSubject.Name = "presentSubject";
+            this.presentSubject.Visible = false;
             this.presentSubject.Width = 25;
             // 
             // apsentSubjects
             // 
             this.apsentSubjects.HeaderText = "N";
             this.apsentSubjects.Name = "apsentSubjects";
+            this.apsentSubjects.Visible = false;
             this.apsentSubjects.Width = 25;
             // 
             // allSubject
             // 
             this.allSubject.HeaderText = "W";
             this.allSubject.Name = "allSubject";
+            this.allSubject.Visible = false;
             this.allSubject.Width = 25;
             // 
             // yearSub
@@ -169,56 +223,43 @@
             this.kSub.HeaderText = "Kierunek";
             this.kSub.Name = "kSub";
             // 
-            // studentsGridView
+            // Column1
             // 
-            this.studentsGridView.AllowUserToAddRows = false;
-            this.studentsGridView.AllowUserToDeleteRows = false;
-            this.studentsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.studentsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.uidStudent,
-            this.nameStudent,
-            this.surnameStudent,
-            this.dateStudent});
-            this.studentsGridView.Location = new System.Drawing.Point(652, 62);
-            this.studentsGridView.Name = "studentsGridView";
-            this.studentsGridView.Size = new System.Drawing.Size(457, 282);
-            this.studentsGridView.TabIndex = 5;
+            this.Column1.HeaderText = "id";
+            this.Column1.Name = "Column1";
+            this.Column1.ReadOnly = true;
+            this.Column1.Visible = false;
             // 
             // uidStudent
             // 
             this.uidStudent.HeaderText = "UID";
             this.uidStudent.Name = "uidStudent";
+            this.uidStudent.ReadOnly = true;
             // 
             // nameStudent
             // 
             this.nameStudent.HeaderText = "Imię";
             this.nameStudent.Name = "nameStudent";
+            this.nameStudent.ReadOnly = true;
             // 
             // surnameStudent
             // 
             this.surnameStudent.HeaderText = "Nazwisko";
             this.surnameStudent.Name = "surnameStudent";
+            this.surnameStudent.ReadOnly = true;
             // 
             // dateStudent
             // 
             this.dateStudent.HeaderText = "Data";
             this.dateStudent.Name = "dateStudent";
-            // 
-            // addLesson
-            // 
-            this.addLesson.Location = new System.Drawing.Point(299, 33);
-            this.addLesson.Name = "addLesson";
-            this.addLesson.Size = new System.Drawing.Size(83, 23);
-            this.addLesson.TabIndex = 6;
-            this.addLesson.Text = "Dodaj wykład";
-            this.addLesson.UseVisualStyleBackColor = true;
-            this.addLesson.Click += new System.EventHandler(this.button1_Click);
+            this.dateStudent.ReadOnly = true;
             // 
             // OknoGlowne
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1121, 358);
+            this.Controls.Add(this.deleteLesson);
             this.Controls.Add(this.addLesson);
             this.Controls.Add(this.studentsGridView);
             this.Controls.Add(this.subjectGridView);
@@ -246,11 +287,9 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView subjectGridView;
         private System.Windows.Forms.DataGridView studentsGridView;
-        private System.Windows.Forms.DataGridViewTextBoxColumn uidStudent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn nameStudent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn surnameStudent;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dateStudent;
         private System.Windows.Forms.Button addLesson;
+        private System.Windows.Forms.Button deleteLesson;
+        private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn subjectSubjects;
         private System.Windows.Forms.DataGridViewTextBoxColumn startSubjects;
         private System.Windows.Forms.DataGridViewTextBoxColumn endSubject;
@@ -260,5 +299,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn yearSub;
         private System.Windows.Forms.DataGridViewTextBoxColumn wSub;
         private System.Windows.Forms.DataGridViewTextBoxColumn kSub;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn uidStudent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn nameStudent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn surnameStudent;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dateStudent;
     }
 }

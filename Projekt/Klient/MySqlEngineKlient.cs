@@ -79,7 +79,7 @@ namespace Klient
         //lista studentow
         public List<string>[] SelectStudentList()
         {
-            string query = "SELECT UID, Imie, Nazwisko, Rok, Wydzial, Kierunek FROM studenci";
+            string query = "SELECT a.UID, a.Imie, a.Nazwisko, b.rok, b.wydzial, b.kierunek FROM studenci a JOIN roczniki b ON a.rocznik = b.id";
 
             //Create a list to store the result
             List<string>[] list = new List<string>[6];
@@ -104,9 +104,9 @@ namespace Klient
                     list[0].Add(dataReader["UID"] + "");
                     list[1].Add(dataReader["Imie"] + "");
                     list[2].Add(dataReader["Nazwisko"] + "");
-                    list[3].Add(dataReader["Rok"] + "");
-                    list[4].Add(dataReader["Wydzial"] + "");
-                    list[5].Add(dataReader["Kierunek"] + "");
+                    list[3].Add(dataReader["rok"] + "");
+                    list[4].Add(dataReader["wydzial"] + "");
+                    list[5].Add(dataReader["kierunek"] + "");
                 }
 
                 //close Data Reader
@@ -130,7 +130,7 @@ namespace Klient
             if (Nazwisko == "")
                 Nazwisko = "Unknown";
 
-            string query = String.Format("INSERT INTO studenci (UID, Imie, Nazwisko) SELECT '{0}', '{1}', '{2}' FROM studenci WHERE NOT EXISTS (SELECT * FROM studenci WHERE UID='{0}') LIMIT 1 ;", UID, Imie, Nazwisko);
+            string query = String.Format("INSERT INTO studenci (UID, Imie, Nazwisko, rocznik) SELECT '{0}', '{1}', '{2}', '{3}' FROM studenci WHERE NOT EXISTS (SELECT * FROM studenci WHERE UID='{0}') LIMIT 1 ;", UID, Imie, Nazwisko, "1");
 
             //open connection
             if (this.OpenConnection() == true)
@@ -209,10 +209,10 @@ namespace Klient
                 this.CloseConnection();
             }
         }
-        public void UptadeStudentYear(string UID, string Rok, string Wydzial, string Kierunek)
+        public void UptadeStudentYear(string UID, string rocznik)
         {
 
-            string query = String.Format("UPDATE studenci SET Rok='{0}', Wydzial='{1}', Kierunek='{2}' WHERE UID='{3}'", Rok, Wydzial, Kierunek, UID);
+            string query = String.Format("UPDATE studenci SET rocznik='{0}' WHERE UID='{1}'", rocznik, UID);
 
             //open connection
             if (this.OpenConnection() == true)
@@ -372,7 +372,7 @@ namespace Klient
                 for (int i = 0; i < Lista[0].Count; i++)
                 {
 
-                    string query = String.Format("SELECT COUNT(*) FROM studenci WHERE rok = '{0}' and wydzial = '{1}' and kierunek = '{2}'", Lista[1][i], Lista[2][i], Lista[3][i]);
+                    string query = String.Format("SELECT COUNT(*) FROM studenci WHERE rocznik = '{0}'", Lista[0][i]);
                     //Create Command
                     MySqlCommand cmd = new MySqlCommand(query, connection);
                     //Create a data reader and Execute the command
@@ -618,15 +618,16 @@ namespace Klient
         }
         public List<string>[] SelectTeachersSubjects(string id)
         {
-            string query = String.Format("SELECT a.przedmiot, b.rok, b.wydzial, b.kierunek FROM wykladowcyZajecia a JOIN roczniki b on a.rocznik = b.id WHERE a.wykladowca={0}", id);
+            string query = String.Format("SELECT a.id, c.Nazwa, b.rok, b.wydzial, b.kierunek FROM wykladowcyZajecia a JOIN roczniki b on a.rocznik = b.id JOIN przedmioty c on a.przedmiot = c.id_przedmiotu WHERE a.wykladowca={0}", id);
 
 
             //Create a list to store the result
-            List<string>[] list = new List<string>[4];
+            List<string>[] list = new List<string>[5];
             list[0] = new List<string>();
             list[1] = new List<string>();
             list[2] = new List<string>();
             list[3] = new List<string>();
+            list[4] = new List<string>();
             //Open connection
             if (this.OpenConnection() == true)
             {
@@ -638,10 +639,11 @@ namespace Klient
                 //Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    list[0].Add(dataReader["przedmiot"] + "");
-                    list[1].Add(dataReader["rok"] + "");
-                    list[2].Add(dataReader["wydzial"] + "");
-                    list[3].Add(dataReader["kierunek"] + "");
+                    list[0].Add(dataReader["id"] + "");
+                    list[1].Add(dataReader["Nazwa"] + "");
+                    list[2].Add(dataReader["rok"] + "");
+                    list[3].Add(dataReader["wydzial"] + "");
+                    list[4].Add(dataReader["kierunek"] + "");
                 }
 
                 //close Data Reader
@@ -656,6 +658,42 @@ namespace Klient
             else
             {
                 return list;
+            }
+        }
+        public void InsertSubjectToTeacher(string wykladowcaId, string rocznik, string przedmiot)
+        {
+
+            string query = String.Format("INSERT INTO wykladowcyZajecia (wykladowca, przedmiot, rocznik) values ('{0}', (Select id_przedmiotu from przedmioty where Nazwa='{1}'), '{2}')", wykladowcaId, przedmiot, rocznik);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        public void deleteSubjectFromTeacher(string id)
+        {
+
+            string query = String.Format("Delete FROM wykladowcyZajecia WHERE id='{0}'", id);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
             }
         }
         //misc
@@ -697,6 +735,25 @@ namespace Klient
 
             return false;
         }
+        public void checkStudentsForLesson()
+        {
+
+            string query = "insert into obecnosc (UID, wyklad) SELECT s.UID, z.id FROM studenci s, zajecia z where not exists(select o.UID, o.wyklad from obecnosc o where o.UID = s.UID and o.wyklad = z.id) and z.rocznik = s.rocznik";
+            
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        
         public void RenameTable(string table, string newName)
         {
 
@@ -777,21 +834,16 @@ namespace Klient
         //okno glowne
         public List<string>[] selectLessonForTeacher(string idTeacher, string date)
         {
-            string query = String.Format("SELECT a.przedmiot, a.data, a.poczatek, a.koniec, a.studentowO, a.studentowN, a.studentowW, b.rok, b.wydzial, b.kierunek FROM zajecia a JOIN roczniki b on a.rocznik = b.id WHERE wykladowca='{0}' AND data='{1}'", idTeacher, date);
+            string query = String.Format("SELECT a.id, c.Nazwa, a.data, a.poczatek, a.koniec, a.studentowO, a.studentowN, a.studentowW, b.rok, b.wydzial, b.kierunek FROM zajecia a JOIN przedmioty c ON a.przedmiot = id_przedmiotu JOIN roczniki b on a.rocznik = b.id WHERE wykladowca='{0}' AND data='{1}'", idTeacher, date);
 
 
             //Create a list to store the result
-            List<string>[] list = new List<string>[10];
-            list[0] = new List<string>();
-            list[1] = new List<string>();
-            list[2] = new List<string>();
-            list[3] = new List<string>();
-            list[4] = new List<string>();
-            list[5] = new List<string>();
-            list[6] = new List<string>();
-            list[7] = new List<string>();
-            list[8] = new List<string>();
-            list[9] = new List<string>();
+            List<string>[] list = new List<string>[11];
+            for (int i = 0; i < 11; i++)
+            {
+                list[i] = new List<string>();
+            }
+           
             //Open connection
             if (this.OpenConnection() == true)
             {
@@ -803,16 +855,17 @@ namespace Klient
                 //Read the data and store them in the list
                 while (dataReader.Read())
                 {
-                    list[0].Add(dataReader["przedmiot"] + "");
-                    list[1].Add(dataReader["data"] + "");
-                    list[2].Add(dataReader["poczatek"] + "");
-                    list[3].Add(dataReader["koniec"] + "");
-                    list[4].Add(dataReader["studentowO"] + "");
-                    list[5].Add(dataReader["studentowN"] + "");
-                    list[6].Add(dataReader["studentowW"] + "");
-                    list[7].Add(dataReader["rok"] + "");
-                    list[8].Add(dataReader["wydzial"] + "");
-                    list[9].Add(dataReader["kierunek"] + "");
+                    list[0].Add(dataReader["id"] + "");
+                    list[1].Add(dataReader["Nazwa"] + "");
+                    list[2].Add(dataReader["data"] + "");
+                    list[3].Add(dataReader["poczatek"] + "");
+                    list[4].Add(dataReader["koniec"] + "");
+                    list[5].Add(dataReader["studentowO"] + "");
+                    list[6].Add(dataReader["studentowN"] + "");
+                    list[7].Add(dataReader["studentowW"] + "");
+                    list[8].Add(dataReader["rok"] + "");
+                    list[9].Add(dataReader["wydzial"] + "");
+                    list[10].Add(dataReader["kierunek"] + "");
                 }
 
                 //close Data Reader
@@ -829,12 +882,164 @@ namespace Klient
                 return list;
             }
         }
-        public void InsertLesson(string wykladowca, string przedmiot, string data, string poczatek, string koniec, string rok, string wydzial, string kierunek)
+        public List<DateTime> selectLessonDates(string idTeacher)
+        {
+            string query = String.Format("Select data from zajecia where wykladowca='{0}'", idTeacher);
+
+
+            //Create a list to store the result
+            List<string> list = new List<string>();
+            List<DateTime> result = new List<DateTime>();
+
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    
+                   list.Add(dataReader["data"] + "");
+                   
+                }
+
+                //close Data Reader
+                dataReader.Close();
+                
+
+                foreach (string text in list)
+                {
+                    if (result.Contains(Convert.ToDateTime(text)))
+                    {
+                        continue;
+                    }
+                    else
+                    {
+                        result.Add(Convert.ToDateTime(text));
+                    }
+                }
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return result;
+            }
+            else
+            {
+                return result;
+            }
+        }
+        public void InsertLesson(string wykladowca, string data, string poczatek, string koniec, string id)
         {
 
-            string query = String.Format("INSERT INTO zajecia (wykladowca, przedmiot, data, poczatek, koniec, rok, wydzial, kierunek) " +
-                                            "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', '{5}', '{6}', '{7}')",
-                                            wykladowca, przedmiot, data, poczatek, koniec, rok, wydzial, kierunek);
+            string query = String.Format("INSERT INTO zajecia (wykladowca, przedmiot, data, poczatek, koniec, rocznik) " +
+                                            "VALUES ('{0}', (Select przedmiot from wykladowcyZajecia where id='{4}'), '{1}', '{2}', '{3}', (Select rocznik from wykladowcyZajecia where id='{4}'))",
+                                            wykladowca, data, poczatek, koniec, id);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        public void deleteLesson(string id)
+        {
+
+            string query = String.Format("Delete FROM zajecia WHERE id='{0}'", id);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        public List<string>[] selectStudentsForLesson(string id)
+        {
+            string query = String.Format("select o.id, o.UID, s.Imie, s.Nazwisko, o.data from obecnosc o JOIN studenci s on o.UID = s.UID where o.wyklad='{0}'", id);
+
+
+            //Create a list to store the result
+            int n = 5;
+            List<string>[] list = new List<string>[n];
+            for (int i = 0; i < n; i++)
+            {
+                list[i] = new List<string>();
+            }
+
+            //Open connection
+            if (this.OpenConnection() == true)
+            {
+                //Create Command
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+                //Create a data reader and Execute the command
+                MySqlDataReader dataReader = cmd.ExecuteReader();
+
+                //Read the data and store them in the list
+                while (dataReader.Read())
+                {
+                    list[0].Add(dataReader["id"] + "");
+                    list[1].Add(dataReader["UID"] + "");
+                    list[2].Add(dataReader["Imie"] + "");
+                    list[3].Add(dataReader["Nazwisko"] + "");
+                    list[4].Add(dataReader["data"] + "");
+                }
+
+                //close Data Reader
+                dataReader.Close();
+
+                //close Connection
+                this.CloseConnection();
+
+                //return list to be displayed
+                return list;
+            }
+            else
+            {
+                return list;
+            }
+        }
+        public void checkInStudent(string idObecnosci)
+        {
+            
+            string data = String.Format("{0}-{1}-{2} {3}:{4}:{5}", DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, DateTime.Now.Hour, DateTime.Now.Minute, DateTime.Now.Second);
+            string query = String.Format("update obecnosc set data ='{1}' where id ='{0}'", idObecnosci, data);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
+        public void checkOutStudent(string idObecnosci)
+        {
+
+            
+            string query = String.Format("update obecnosc set data =null where id ='{0}'", idObecnosci);
 
             //open connection
             if (this.OpenConnection() == true)

@@ -85,11 +85,13 @@
             this.infoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.wylogujToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.teachersSubjectsGridView = new System.Windows.Forms.DataGridView();
+            this.addTeacherLessonToList = new System.Windows.Forms.Button();
+            this.deleteTeacherLessonToList = new System.Windows.Forms.Button();
+            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.przedmiot = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.yearTeacher = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.wT = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.kT = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.addTeacherLessonToList = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.usersGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.LogGrid)).BeginInit();
             this.AdminTabPageBox.SuspendLayout();
@@ -498,6 +500,7 @@
             // 
             // ListaWykladowcowTabPage
             // 
+            this.ListaWykladowcowTabPage.Controls.Add(this.deleteTeacherLessonToList);
             this.ListaWykladowcowTabPage.Controls.Add(this.addTeacherLessonToList);
             this.ListaWykladowcowTabPage.Controls.Add(this.teachersSubjectsGridView);
             this.ListaWykladowcowTabPage.Controls.Add(this.CheckTables);
@@ -652,6 +655,7 @@
             this.teachersSubjectsGridView.AllowUserToDeleteRows = false;
             this.teachersSubjectsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.teachersSubjectsGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
             this.przedmiot,
             this.yearTeacher,
             this.wT,
@@ -661,9 +665,34 @@
             this.teachersSubjectsGridView.Size = new System.Drawing.Size(454, 365);
             this.teachersSubjectsGridView.TabIndex = 11;
             // 
+            // addTeacherLessonToList
+            // 
+            this.addTeacherLessonToList.Location = new System.Drawing.Point(461, 6);
+            this.addTeacherLessonToList.Name = "addTeacherLessonToList";
+            this.addTeacherLessonToList.Size = new System.Drawing.Size(91, 23);
+            this.addTeacherLessonToList.TabIndex = 12;
+            this.addTeacherLessonToList.Text = "Dodaj przedmiot";
+            this.addTeacherLessonToList.UseVisualStyleBackColor = true;
+            this.addTeacherLessonToList.Click += new System.EventHandler(this.addTeacherLessonToList_Click);
+            // 
+            // deleteTeacherLessonToList
+            // 
+            this.deleteTeacherLessonToList.Location = new System.Drawing.Point(558, 6);
+            this.deleteTeacherLessonToList.Name = "deleteTeacherLessonToList";
+            this.deleteTeacherLessonToList.Size = new System.Drawing.Size(75, 23);
+            this.deleteTeacherLessonToList.TabIndex = 6;
+            this.deleteTeacherLessonToList.Text = "Usuń";
+            this.deleteTeacherLessonToList.UseVisualStyleBackColor = true;
+            this.deleteTeacherLessonToList.Click += new System.EventHandler(this.deleteTeacherLessonToList_Click);
+            // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "id";
+            this.Column2.Name = "Column2";
+            this.Column2.Width = 40;
+            // 
             // przedmiot
             // 
-            this.przedmiot.Frozen = true;
             this.przedmiot.HeaderText = "Przedmiot";
             this.przedmiot.Name = "przedmiot";
             // 
@@ -682,16 +711,6 @@
             // 
             this.kT.HeaderText = "Kierunek";
             this.kT.Name = "kT";
-            // 
-            // addTeacherLessonToList
-            // 
-            this.addTeacherLessonToList.Location = new System.Drawing.Point(461, 6);
-            this.addTeacherLessonToList.Name = "addTeacherLessonToList";
-            this.addTeacherLessonToList.Size = new System.Drawing.Size(91, 23);
-            this.addTeacherLessonToList.TabIndex = 12;
-            this.addTeacherLessonToList.Text = "Dodaj przedmiot";
-            this.addTeacherLessonToList.UseVisualStyleBackColor = true;
-            this.addTeacherLessonToList.Click += new System.EventHandler(this.addTeacherLessonToList_Click);
             // 
             // OknoAdmina
             // 
@@ -783,11 +802,13 @@
         private System.Windows.Forms.NumericUpDown numericUpDown1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.DataGridView teachersSubjectsGridView;
+        private System.Windows.Forms.Button addTeacherLessonToList;
+        private System.Windows.Forms.Button deleteTeacherLessonToList;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn przedmiot;
         private System.Windows.Forms.DataGridViewTextBoxColumn yearTeacher;
         private System.Windows.Forms.DataGridViewTextBoxColumn wT;
         private System.Windows.Forms.DataGridViewTextBoxColumn kT;
-        private System.Windows.Forms.Button addTeacherLessonToList;
     }
 }
 

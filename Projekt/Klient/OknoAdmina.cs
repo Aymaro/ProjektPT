@@ -135,14 +135,13 @@ namespace Klient
             }
             else
             {
-                string[] dane = new string[4];
+                string[] dane = new string[2];
                 dane[0] = usersGrid.Rows[usersGrid.CurrentCell.RowIndex].Cells[0].Value.ToString();
-                for (int i = 1; i < 4; i++)
-                {
-                    dane[i] = yearsGridView.Rows[yearsGridView.CurrentCell.RowIndex].Cells[i].Value.ToString();
-                }
+                
+                dane[1] = yearsGridView.Rows[yearsGridView.CurrentCell.RowIndex].Cells[0].Value.ToString();
+                
 
-                msql.UptadeStudentYear(dane[0], dane[1], dane[2], dane[3]);
+                msql.UptadeStudentYear(dane[0], dane[1]);
                 RefreshUsersTmp();
                 //msql.countStudents();
             }
@@ -552,13 +551,13 @@ namespace Klient
         {
             //pokazujemy jakie ten wylkadowca ma przedmioty
             string id = TeachersGrid.Rows[TeachersGrid.CurrentCell.RowIndex].Cells[0].Value.ToString();
-            List<string>[] Lista = new List<string>[4];
+            List<string>[] Lista = new List<string>[5];
             Lista = msql.SelectTeachersSubjects(id);
 
             teachersSubjectsGridView.Rows.Clear();
             for (int i = 0; i < Lista[0].Count; i++)
             {
-                teachersSubjectsGridView.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i], Lista[3][i]);
+                teachersSubjectsGridView.Rows.Add(Lista[0][i], Lista[1][i], Lista[2][i], Lista[3][i], Lista[4][i]);
             }
         }
         private void addTeacherLessonToList_Click(object sender, EventArgs e)
@@ -639,6 +638,32 @@ namespace Klient
             }
         }
 
-        
+        private void deleteTeacherLessonToList_Click(object sender, EventArgs e)
+        {
+            if (teachersSubjectsGridView.SelectedCells.Count == 0 || teachersSubjectsGridView.CurrentCell.RowIndex > teachersSubjectsGridView.Rows.Count)
+            {
+                MessageBox.Show("Musisz zaznaczyć chociaż jeden element z listy!", "Błąd", MessageBoxButtons.OK);
+            }
+            else if (teachersSubjectsGridView.SelectedCells.Count > 1 && teachersSubjectsGridView.SelectedRows.Count != 1)
+            {
+                MessageBox.Show("Proszę zaznaczyć tylko jedną pozycję.", "Błąd", MessageBoxButtons.OK);
+            }
+            else
+            {
+                string id = teachersSubjectsGridView.Rows[teachersSubjectsGridView.CurrentCell.RowIndex].Cells[0].Value.ToString();
+
+                DialogResult result = MessageBox.Show("Czy aby na pewno chcesz usunąć ten element?", "Potwierdź usunięcie.", MessageBoxButtons.YesNo);
+
+                if (result == DialogResult.Yes)
+                {
+                    msql.deleteSubjectFromTeacher(id);
+                }
+                else
+                {
+                    return;
+                }
+
+            }
+        }
     }
 }
