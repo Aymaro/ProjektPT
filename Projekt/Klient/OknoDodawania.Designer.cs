@@ -41,11 +41,13 @@
             this.LoginTextBox = new System.Windows.Forms.TextBox();
             this.LabelHaslo = new System.Windows.Forms.Label();
             this.LabelLogin = new System.Windows.Forms.Label();
+            this.repeatHasloTextBox = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // AddButton
             // 
-            this.AddButton.Location = new System.Drawing.Point(294, 97);
+            this.AddButton.Location = new System.Drawing.Point(294, 126);
             this.AddButton.Name = "AddButton";
             this.AddButton.Size = new System.Drawing.Size(75, 23);
             this.AddButton.TabIndex = 0;
@@ -55,7 +57,7 @@
             // 
             // CancelButton
             // 
-            this.CancelButton.Location = new System.Drawing.Point(12, 97);
+            this.CancelButton.Location = new System.Drawing.Point(12, 126);
             this.CancelButton.Name = "CancelButton";
             this.CancelButton.Size = new System.Drawing.Size(75, 23);
             this.CancelButton.TabIndex = 1;
@@ -113,7 +115,7 @@
             // EditCheckBox
             // 
             this.EditCheckBox.AutoSize = true;
-            this.EditCheckBox.Location = new System.Drawing.Point(15, 73);
+            this.EditCheckBox.Location = new System.Drawing.Point(15, 102);
             this.EditCheckBox.Name = "EditCheckBox";
             this.EditCheckBox.Size = new System.Drawing.Size(78, 17);
             this.EditCheckBox.TabIndex = 10;
@@ -122,7 +124,7 @@
             // 
             // HasloTextBox
             // 
-            this.HasloTextBox.Location = new System.Drawing.Point(254, 71);
+            this.HasloTextBox.Location = new System.Drawing.Point(133, 71);
             this.HasloTextBox.Name = "HasloTextBox";
             this.HasloTextBox.PasswordChar = '*';
             this.HasloTextBox.Size = new System.Drawing.Size(115, 20);
@@ -131,7 +133,7 @@
             // 
             // LoginTextBox
             // 
-            this.LoginTextBox.Location = new System.Drawing.Point(133, 71);
+            this.LoginTextBox.Location = new System.Drawing.Point(12, 71);
             this.LoginTextBox.Name = "LoginTextBox";
             this.LoginTextBox.Size = new System.Drawing.Size(115, 20);
             this.LoginTextBox.TabIndex = 11;
@@ -139,7 +141,7 @@
             // LabelHaslo
             // 
             this.LabelHaslo.AutoSize = true;
-            this.LabelHaslo.Location = new System.Drawing.Point(254, 55);
+            this.LabelHaslo.Location = new System.Drawing.Point(133, 55);
             this.LabelHaslo.Name = "LabelHaslo";
             this.LabelHaslo.Size = new System.Drawing.Size(34, 13);
             this.LabelHaslo.TabIndex = 14;
@@ -148,18 +150,37 @@
             // LabelLogin
             // 
             this.LabelLogin.AutoSize = true;
-            this.LabelLogin.Location = new System.Drawing.Point(133, 55);
+            this.LabelLogin.Location = new System.Drawing.Point(12, 55);
             this.LabelLogin.Name = "LabelLogin";
             this.LabelLogin.Size = new System.Drawing.Size(33, 13);
             this.LabelLogin.TabIndex = 13;
             this.LabelLogin.Text = "Login";
+            // 
+            // repeatHasloTextBox
+            // 
+            this.repeatHasloTextBox.Location = new System.Drawing.Point(254, 71);
+            this.repeatHasloTextBox.Name = "repeatHasloTextBox";
+            this.repeatHasloTextBox.PasswordChar = '*';
+            this.repeatHasloTextBox.Size = new System.Drawing.Size(115, 20);
+            this.repeatHasloTextBox.TabIndex = 13;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(254, 55);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(73, 13);
+            this.label1.TabIndex = 16;
+            this.label1.Text = "Powtórz haslo";
             // 
             // OknoDodawania
             // 
             this.AcceptButton = this.AddButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(381, 130);
+            this.ClientSize = new System.Drawing.Size(381, 161);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.repeatHasloTextBox);
             this.Controls.Add(this.LabelHaslo);
             this.Controls.Add(this.LabelLogin);
             this.Controls.Add(this.HasloTextBox);
@@ -199,5 +220,7 @@
         private System.Windows.Forms.TextBox LoginTextBox;
         private System.Windows.Forms.Label LabelHaslo;
         private System.Windows.Forms.Label LabelLogin;
+        private System.Windows.Forms.TextBox repeatHasloTextBox;
+        private System.Windows.Forms.Label label1;
     }
 }

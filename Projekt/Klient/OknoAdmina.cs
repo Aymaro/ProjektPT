@@ -232,6 +232,7 @@ namespace Klient
                 if (result == DialogResult.Yes)
                 {
                     msql.DeleteYear(id);
+                    msql.moveStudentsFromYearToYearZero(id);
                     RefreshYearsTmp();
                 }
                 else

@@ -98,7 +98,7 @@ namespace Klient
             if (Nazwisko == "")
                 Nazwisko = "Unknown";
 
-            string query = String.Format("INSERT INTO studenci (UID, Imie, Nazwisko) SELECT '{0}', '{1}', '{2}' FROM studenci WHERE NOT EXISTS (SELECT * FROM studenci WHERE UID='{0}') LIMIT 1 ;", UID, Imie, Nazwisko);
+            string query = String.Format("INSERT INTO studenci (UID, Imie, Nazwisko, rocznik) SELECT '{0}', '{1}', '{2}', '1' FROM studenci WHERE NOT EXISTS (SELECT * FROM studenci WHERE UID='{0}') LIMIT 1 ;", UID, Imie, Nazwisko);
 
             //open connection
             if (this.OpenConnection() == true)
@@ -175,7 +175,7 @@ namespace Klient
 
             
             
-            string query = String.Format("update obecnosc o set o.data = '{0}' where o.id = (select o.id from zajecia z where o.data='' and z.id = o.wyklad and o.uid = '{1}' and z.data='{2}' and z.poczatek < '{3}' and z.koniec > '{3}')", fulldate, UID, date, hour);
+            string query = String.Format("update obecnosc o set o.data = '{0}' where o.id = (select o.id from zajecia z where z.id = o.wyklad and o.uid = '{1}' and z.data='{2}' and z.poczatek < '{3}' and z.koniec > '{3}')", fulldate, UID, date, hour);
 
             //open connection
             if (this.OpenConnection() == true)

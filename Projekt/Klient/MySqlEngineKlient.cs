@@ -402,6 +402,24 @@ namespace Klient
             }
 
         }
+        public void moveStudentsFromYearToYearZero(string ID)
+        {
+
+            string query = String.Format("UPDATE studenci SET rocznik='1' WHERE rocznik='{0}'", ID);
+
+            //open connection
+            if (this.OpenConnection() == true)
+            {
+                //create command and assign the query and connection from the constructor
+                MySqlCommand cmd = new MySqlCommand(query, connection);
+
+                //Execute command
+                cmd.ExecuteNonQuery();
+
+                //close connection
+                this.CloseConnection();
+            }
+        }
         //log
         public List<string>[] SelectLog(int n)
         {

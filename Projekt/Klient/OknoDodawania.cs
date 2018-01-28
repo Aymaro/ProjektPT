@@ -26,6 +26,7 @@ namespace Klient
                 LabelLogin.Hide();
                 LoginTextBox.Hide();
                 HasloTextBox.Hide();
+                repeatHasloTextBox.Hide();
             }
             else if ( akcja == "w")
             {
@@ -47,29 +48,31 @@ namespace Klient
             EditCheckBox.Checked = true;
             EditCheckBox.Enabled = false;
             OA = _OA;
-            //chowamy elementy przydatne przy dodawaniu wykladowcow
+            //chowamy elementy przydatne przy dodawaniu studentow
             LabelHaslo.Hide();
             LabelLogin.Hide();
             LoginTextBox.Hide();
             HasloTextBox.Hide();
+            repeatHasloTextBox.Hide();
         }
         //Edycja wykladowcy
-        public OknoDodawania(OknoAdmina _OA, string _ID, string Imie, string Nazwisko, string Login, string Haslo)
+        public OknoDodawania(OknoAdmina _OA, string _ID, string _imie, string _nazwisko, string Login, string _haslo)
         {
             InitializeComponent();
             AddButton.Text = "Edytuj";
             akcja = "w";
             LabelID.Text = "ID";
-            haslo = Haslo;
-            imie = Imie;
-            nazwisko = Nazwisko;
+            haslo = _haslo;
+            imie = _imie;
+            nazwisko = _nazwisko;
             UIDtextBox.Text = _ID;
             //UIDtextBox.Enabled = false;
             UIDtextBox.ReadOnly = true;
-            ImieTextBox.Text = Imie;
+            ImieTextBox.Text = imie;
             LoginTextBox.Text = Login;
-            HasloTextBox.Text = Haslo;
-            NazwiskoTextBox.Text = Nazwisko;
+            HasloTextBox.Text = haslo;
+            repeatHasloTextBox.Text = haslo;
+            NazwiskoTextBox.Text = nazwisko;
             EditCheckBox.Checked = true;
             OA = _OA;
         }
@@ -89,6 +92,7 @@ namespace Klient
                          || NazwiskoTextBox.Text == "")
                     {
                         MessageBox.Show("Błąd! Żadne z pól nie może być puste!", "Błąd!", MessageBoxButtons.OK);
+                        return;
                     }
                     else
                     {
@@ -111,6 +115,7 @@ namespace Klient
                         || NazwiskoTextBox.Text == "")
                     {
                         MessageBox.Show("Błąd! Żadne z pól nie może być puste!", "Błąd!", MessageBoxButtons.OK);
+                        return;
                     }
                     else
                     {
@@ -130,31 +135,29 @@ namespace Klient
                             || HasloTextBox.Text == "") 
                     {
                         MessageBox.Show("Błąd! Żadne z pól nie może być puste!", "Błąd!", MessageBoxButtons.OK);
+                        return;
                     }
                     else
                     {
                         //sprawdza czy haslo zostalo zmienione 
-                        if (HasloTextBox.Text == haslo)
+                        if (HasloTextBox.Text == haslo && repeatHasloTextBox.Text == haslo)
                         {
                             OA.msql.UptadeTeacher(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text, LoginTextBox.Text, HasloTextBox.Text);
-                        }
-                        else
-                        {
-                            OA.msql.UptadeTeacher(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text, LoginTextBox.Text, OA.msql.MD5Hash(HasloTextBox.Text));
-                        }
-
-                        //sprawdzamy czy imie lub nazwisko zostalo zmienione
-                        if (imie == ImieTextBox.Text && nazwisko == NazwiskoTextBox.Text)
-                        {
                             Close();
                         }
                         else
                         {
-                            string oldName = String.Format("w_{0}_{1}", imie.ToLower(), nazwisko.ToLower());
-                            string newName = String.Format("w_{0}_{1}", ImieTextBox.Text.ToLower(), NazwiskoTextBox.Text.ToLower());
-                            OA.msql.RenameTable(oldName, newName);
+                            if (HasloTextBox.Text == repeatHasloTextBox.Text)
+                            {
+                                OA.msql.UptadeTeacher(UIDtextBox.Text, ImieTextBox.Text, NazwiskoTextBox.Text, LoginTextBox.Text, OA.msql.MD5Hash(HasloTextBox.Text));
+                                Close();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Oba hasła muszą być identyczne!", "Błąd", MessageBoxButtons.OK);
+                                return;
+                            }
                         }
-                        
 
                         Close();
                     }
@@ -168,11 +171,20 @@ namespace Klient
                       || HasloTextBox.Text == "")
                     {
                         MessageBox.Show("Błąd! Żadne z pól nie może być puste!", "Błąd!", MessageBoxButtons.OK);
+                        return;
                     }
                     else
                     {
-                        OA.msql.InsertTeacher(ImieTextBox.Text, NazwiskoTextBox.Text, LoginTextBox.Text, OA.msql.MD5Hash(HasloTextBox.Text));
-                        Close();
+                        if (HasloTextBox.Text == repeatHasloTextBox.Text)
+                        {
+                            OA.msql.InsertTeacher(ImieTextBox.Text, NazwiskoTextBox.Text, LoginTextBox.Text, OA.msql.MD5Hash(HasloTextBox.Text));
+                            Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Oba hasła muszą być identyczne!", "Błąd", MessageBoxButtons.OK);
+                            return;
+                        }
                     }
                 }
             }
